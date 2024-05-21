@@ -14,6 +14,8 @@ public class Vertex {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private String name;
+
     private String description;
 
     private String type;
@@ -21,8 +23,5 @@ public class Vertex {
     private int level;
 
     private boolean availability;
-
-    @ManyToOne
-    private Scheme subScheme;
 
 }
