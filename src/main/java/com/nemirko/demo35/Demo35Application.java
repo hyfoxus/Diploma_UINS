@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@Configuration
 @EnableTransactionManagement
 public class Demo35Application {
 

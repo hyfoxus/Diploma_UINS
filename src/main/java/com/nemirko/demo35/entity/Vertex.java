@@ -18,7 +18,7 @@ public class Vertex {
 
     private String description;
 
-    private String type;
+    private VertexType type;
 
     private int level;
 

@@ -16,21 +16,20 @@ public class CorridorController {
     private CorridorService corridorService;
 
     @GetMapping
-    public List<Corridor> getAllCorridors() {
-        return corridorService.getAllCorridors();
+    public ResponseEntity<List<Corridor>> getAllCorridors() {
+        List<Corridor> corridors = corridorService.getAllCorridors();
+        return ResponseEntity.ok(corridors);
     }
 
     @GetMapping("/{id}")
-    public Corridor getCorridorById(@PathVariable Long id) {
-        return corridorService.getCorridorById(id);
+    public ResponseEntity<Corridor> getCorridorById(@PathVariable Long id) {
+        Corridor corridor = corridorService.getCorridorById(id);
+        return ResponseEntity.ok(corridor);
     }
 
+
     @PostMapping
-    public Corridor saveCorridor(@RequestBody Corridor corridor) {
-        return corridorService.saveCorridor(corridor);
-    }
-    @PostMapping("/new")
-    public ResponseEntity<Corridor> createCorridor(@RequestParam int distance,@RequestParam long vertex1Id, @RequestParam long vertex2Id) {
+    public ResponseEntity<Corridor> saveCorridor(@RequestParam int distance,@RequestParam long vertex1Id, @RequestParam long vertex2Id) {
         try {
             Corridor corridor = corridorService.createCorridorWithVertices(distance, vertex1Id, vertex2Id);
             return ResponseEntity.ok(corridor);

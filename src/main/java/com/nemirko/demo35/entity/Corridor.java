@@ -16,11 +16,11 @@ public class Corridor {
 
     private int distance; // No special annotations needed for basic fields.
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "vertex1_id")
     private Vertex vertex1;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "vertex2_id")
     private Vertex vertex2;
 }
