@@ -1,6 +1,5 @@
 package com.nemirko.demo35.repository;
 
-import com.nemirko.demo35.entity.Corridor;
 import com.nemirko.demo35.entity.Scheme;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -19,7 +19,7 @@ public class Scheme {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "scheme_id")
-    private List<Corridor> corridors;
+    private List<Edge> edges;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "scheme_id")

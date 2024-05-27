@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Corridor {
+public class Edge {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private long id;

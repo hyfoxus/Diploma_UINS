@@ -1,12 +1,9 @@
 package com.nemirko.demo35.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.nemirko.demo35.entity.Corridor;
 import com.nemirko.demo35.entity.Scheme;
-import com.nemirko.demo35.entity.Vertex;
-import com.nemirko.demo35.repository.CorridorRepository;
+import com.nemirko.demo35.repository.EdgeRepository;
 import com.nemirko.demo35.repository.SchemeRepository;
 import com.nemirko.demo35.repository.VertexRepository;
 import lombok.AllArgsConstructor;
@@ -22,7 +19,7 @@ public class SchemeService {
     @Autowired
     private  VertexRepository vertexRepository;
     @Autowired
-    private CorridorRepository corridorRepository;
+    private EdgeRepository edgeRepository;
 
     public List<Scheme> getAllSchemes() {
         return schemeRepository.findAll();
