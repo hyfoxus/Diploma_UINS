@@ -12,7 +12,6 @@ public class Scheme {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "scheme_id")
     private List<Vertex> vertexes;
