@@ -1,6 +1,8 @@
 package com.nemirko.demo35.service;
 
+import com.nemirko.demo35.entity.Scheme;
 import com.nemirko.demo35.entity.Vertex;
+import com.nemirko.demo35.repository.EdgeRepository;
 import com.nemirko.demo35.repository.VertexRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,22 +10,25 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class DijkstraPathfindingServiceImpl {
+public class DijkstraPathfindingServiceImpl implements NavigationService {
 
     @Autowired
     private VertexRepository vertexRepository;
 
-    public List<List<Vertex>> findThreeShortestPaths(long startId, long endId) {
+    @Autowired
+    private EdgeRepository edgeRepository;
+
+    public List<List<Vertex>> getShortestPaths(long startId, long endId, int amountRoutes) {
         Vertex startVertex = vertexRepository.findById(startId).orElse(null);
         Vertex endVertex = vertexRepository.findById(endId).orElse(null);
         if (startVertex == null || endVertex == null) {
             throw new IllegalStateException("One or both vertices not found");
         }
 
-        return dijkstraThreePaths(startVertex, endVertex);
+        return dijkstraPaths(startVertex, endVertex, amountRoutes);
     }
 
-    private List<List<Vertex>> dijkstraThreePaths(Vertex start, Vertex end) {
+    private List<List<Vertex>> dijkstraPaths(Vertex start, Vertex end, int amountRoutes) {
         // Priority Queue to hold the paths with their distances
         PriorityQueue<Path> queue = new PriorityQueue<>(Comparator.comparingInt(p -> p.distance));
         queue.add(new Path(start, 0));
@@ -32,7 +37,7 @@ public class DijkstraPathfindingServiceImpl {
         Map<Vertex, Integer> shortestDistances = new HashMap<>();
         int pathsFound = 0;
 
-        while (!queue.isEmpty() && pathsFound < 3) {
+        while (!queue.isEmpty() && pathsFound < amountRoutes) {
             Path path = queue.poll();
             Vertex currentVertex = path.vertices.get(path.vertices.size() - 1);
 
@@ -49,7 +54,7 @@ public class DijkstraPathfindingServiceImpl {
                 continue;
             }
 
-            for (Map.Entry<Long, Integer> neighborEntry : currentVertex.getNeighbors().entrySet()) {
+            for (Map.Entry<Long, Integer> neighborEntry : currentVertex.getAngles().entrySet()) {
                 Vertex neighbor = vertexRepository.findById(neighborEntry.getKey()).orElse(null);
                 if (neighbor == null) {
                     continue;

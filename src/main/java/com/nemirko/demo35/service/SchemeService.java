@@ -24,18 +24,18 @@ public class SchemeService {
     @Autowired
     private EdgeRepository edgeRepository;
 
-    public List<Scheme> getAllSchemes() {
+    public List<Scheme> getAll() {
         return schemeRepository.findAll();
     }
 
-    public Scheme getSchemeById(Long id) {
+    public Scheme getById(Long id) {
         return schemeRepository.findById(id).orElse(null);
     }
 
 
 
     @Transactional
-    public Scheme createScheme(List<Long> vertexIds, List<Long> edgeIds) {
+    public Scheme create(List<Long> vertexIds, List<Long> edgeIds) {
         List<Vertex> vertexes = vertexRepository.findAllById(vertexIds);
         List<Edge> edges = edgeRepository.findAllById(edgeIds);
 

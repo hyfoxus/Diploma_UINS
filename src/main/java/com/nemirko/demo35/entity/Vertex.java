@@ -18,7 +18,7 @@ public class Vertex {
     private long id;
 
     @ElementCollection
-    private Map<Long, Integer> neighbors = new HashMap<>();
+    private Map<Long, Integer> angles = new HashMap<>();
 
     private String name;
 

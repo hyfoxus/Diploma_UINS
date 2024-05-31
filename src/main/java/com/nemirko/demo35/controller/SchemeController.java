@@ -16,17 +16,17 @@ public class SchemeController {
 
     @GetMapping("/")
     public ResponseEntity<List<Scheme>> getAllSchemes() {
-        return ResponseEntity.ok(schemeService.getAllSchemes());
+        return ResponseEntity.ok(schemeService.getAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Scheme> getSchemeById(@PathVariable Long id) {
-        return ResponseEntity.ok(schemeService.getSchemeById(id));
+        return ResponseEntity.ok(schemeService.getById(id));
     }
 
     @PostMapping("/")
     public ResponseEntity<Scheme> createScheme(@RequestParam List<Long> vertexIds, @RequestParam List<Long> edgeIds) {
-        Scheme scheme = schemeService.createScheme(vertexIds, edgeIds);
+        Scheme scheme = schemeService.create(vertexIds, edgeIds);
         return ResponseEntity.ok(scheme);
     }
 }

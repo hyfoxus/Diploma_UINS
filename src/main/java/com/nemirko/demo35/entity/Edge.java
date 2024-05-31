@@ -18,9 +18,9 @@ public class Edge {
 
     @ManyToOne
     @JoinColumn(name = "vertex1_id")
-    private Vertex vertex1;
+    private Vertex vertexFrom;
 
     @ManyToOne
     @JoinColumn(name = "vertex2_id")
-    private Vertex vertex2;
+    private Vertex vertexTo;
 }

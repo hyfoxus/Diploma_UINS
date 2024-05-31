@@ -20,18 +20,18 @@ public class EdgeService {
     @Autowired
     private EdgeRepository edgeRepository;
 
-    public List<Edge> getAllCorridors() {
+    public List<Edge> getAll() {
         return edgeRepository.findAll();
     }
 
-    public Edge getCorridorById(Long id) {
+    public Edge getById(Long id) {
         return edgeRepository.findById(id).orElse(null);
     }
 
 
 
     @Transactional
-    public Edge createCorridorWithVertices(int distance, long vertexFromId, long vertexToId, int direction) {
+    public Edge create(int distance, long vertexFromId, long vertexToId, int direction) {
         Optional<Vertex> vertex1 = vertexRepository.findById(vertexFromId);
         Optional<Vertex> vertex2 = vertexRepository.findById(vertexToId);
         if (vertex1.isEmpty() || vertex2.isEmpty()) {
@@ -39,18 +39,21 @@ public class EdgeService {
         }
         Edge edge = new Edge();
         edge.setDistance(distance);
-        edge.setVertex1(vertex1.get());
-        edge.setVertex2(vertex2.get());
+        edge.setVertexFrom(vertex1.get());
+        edge.setVertexTo(vertex2.get());
 
-        vertex1.get().getNeighbors().put(vertexToId, direction);
-        vertex2.get().getNeighbors().put(vertexFromId, (180 + direction) % 360);
+        vertex1.get().getAngles().put(edge.getId(), direction);
+        vertex2.get().getAngles().put(edge.getId(), (180 + direction) % 360);
         vertexRepository.save(vertex1.get());
         vertexRepository.save(vertex2.get());
         return edgeRepository.save(edge);
     }
 
 
-    public void deleteCorridor(Long id) {
+    public void delete(Long id) {
+        edgeRepository.getById(id).getVertexFrom().getAngles().remove(id);
+        edgeRepository.getById(id).getVertexTo().getAngles().remove(id);
         edgeRepository.deleteById(id);
+
     }
 }
