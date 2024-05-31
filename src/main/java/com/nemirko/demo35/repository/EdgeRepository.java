@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface EdgeRepository extends JpaRepository<Edge, Long> {
     // Add any additional methods you need here
-
+    Edge findByVertexFromAndVertexTo(Vertex vertexFrom, Vertex vertexTo);
 }

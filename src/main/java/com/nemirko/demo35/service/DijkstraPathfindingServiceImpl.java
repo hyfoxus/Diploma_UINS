@@ -1,8 +1,10 @@
 package com.nemirko.demo35.service;
 
+import com.nemirko.demo35.entity.Edge;
 import com.nemirko.demo35.entity.Scheme;
 import com.nemirko.demo35.entity.Vertex;
 import com.nemirko.demo35.repository.EdgeRepository;
+import com.nemirko.demo35.repository.SchemeRepository;
 import com.nemirko.demo35.repository.VertexRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,19 +20,27 @@ public class DijkstraPathfindingServiceImpl implements NavigationService {
     @Autowired
     private EdgeRepository edgeRepository;
 
-    public List<List<Vertex>> getShortestPaths(long startId, long endId, int amountRoutes) {
+    @Autowired
+    private SchemeRepository schemeRepository;
+
+    @Override
+    public List<List<Vertex>> getShortestPaths(long schemeId, long startId, long endId, int amountRoutes) {
         Vertex startVertex = vertexRepository.findById(startId).orElse(null);
         Vertex endVertex = vertexRepository.findById(endId).orElse(null);
-        if (startVertex == null || endVertex == null) {
-            throw new IllegalStateException("One or both vertices not found");
+        Scheme scheme = schemeRepository.findById(schemeId).orElse(null);
+        if (startVertex == null || endVertex == null || scheme == null) {
+            throw new IllegalStateException("One or both vertices not found or actually scheme not found");
         }
 
-        return dijkstraPaths(startVertex, endVertex, amountRoutes);
+        if (!scheme.getVertexes().contains(startVertex) || !scheme.getVertexes().contains(endVertex)) {
+            throw new IllegalStateException("Start or end vertex not in the specified scheme");
+        }
+
+        return findPaths(scheme, startVertex, endVertex, amountRoutes);
     }
 
-    private List<List<Vertex>> dijkstraPaths(Vertex start, Vertex end, int amountRoutes) {
-        // Priority Queue to hold the paths with their distances
-        PriorityQueue<Path> queue = new PriorityQueue<>(Comparator.comparingInt(p -> p.distance));
+    private List<List<Vertex>> findPaths(Scheme scheme, Vertex start, Vertex end, int amountRoutes) {
+        PriorityQueue<Path> queue = new PriorityQueue<>(Comparator.comparingInt(Path::getDistance));
         queue.add(new Path(start, 0));
 
         List<List<Vertex>> shortestPaths = new ArrayList<>();
@@ -38,29 +48,36 @@ public class DijkstraPathfindingServiceImpl implements NavigationService {
         int pathsFound = 0;
 
         while (!queue.isEmpty() && pathsFound < amountRoutes) {
-            Path path = queue.poll();
-            Vertex currentVertex = path.vertices.get(path.vertices.size() - 1);
+            Path currentPath = queue.poll();
+            Vertex currentVertex = currentPath.getLastVertex();
 
             if (shortestDistances.containsKey(currentVertex) &&
-                    path.distance > shortestDistances.get(currentVertex)) {
+                    currentPath.getDistance() > shortestDistances.get(currentVertex)) {
                 continue;
             }
 
-            shortestDistances.put(currentVertex, path.distance);
+            shortestDistances.put(currentVertex, currentPath.getDistance());
 
             if (currentVertex.equals(end)) {
-                shortestPaths.add(new ArrayList<>(path.vertices));
+                shortestPaths.add(new ArrayList<>(currentPath.getVertices()));
                 pathsFound++;
                 continue;
             }
 
             for (Map.Entry<Long, Integer> neighborEntry : currentVertex.getAngles().entrySet()) {
                 Vertex neighbor = vertexRepository.findById(neighborEntry.getKey()).orElse(null);
-                if (neighbor == null) {
+                if (neighbor == null || !scheme.getVertexes().contains(neighbor)) {
                     continue;
                 }
-                int newDistance = path.distance + neighborEntry.getValue();
-                List<Vertex> newPath = new ArrayList<>(path.vertices);
+
+                // Fetch the edge to get the distance
+                Edge edge = edgeRepository.findByVertexFromAndVertexTo(currentVertex, neighbor);
+                if (edge == null || !scheme.getEdges().contains(edge)) {
+                    continue;
+                }
+
+                int newDistance = currentPath.getDistance() + edge.getDistance();
+                List<Vertex> newPath = new ArrayList<>(currentPath.getVertices());
                 newPath.add(neighbor);
                 queue.add(new Path(newPath, newDistance));
             }
@@ -70,8 +87,8 @@ public class DijkstraPathfindingServiceImpl implements NavigationService {
     }
 
     private static class Path {
-        List<Vertex> vertices;
-        int distance;
+        private final List<Vertex> vertices;
+        private final int distance;
 
         Path(Vertex start, int distance) {
             this.vertices = new ArrayList<>();
@@ -82,6 +99,18 @@ public class DijkstraPathfindingServiceImpl implements NavigationService {
         Path(List<Vertex> vertices, int distance) {
             this.vertices = vertices;
             this.distance = distance;
+        }
+
+        List<Vertex> getVertices() {
+            return vertices;
+        }
+
+        int getDistance() {
+            return distance;
+        }
+
+        Vertex getLastVertex() {
+            return vertices.get(vertices.size() - 1);
         }
     }
 }
