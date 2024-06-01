@@ -20,6 +20,8 @@ public class Vertex {
     @ElementCollection
     private Map<Long, Integer> angles = new HashMap<>();
 
+    private long scheme_id;
+
     private String name;
 
     private String description;

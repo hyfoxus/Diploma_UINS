@@ -16,6 +16,10 @@ public class Edge {
 
     private int distance; // No special annotations needed for basic fields.
 
+    private EdgeType type;
+
+    private long scheme_id;
+
     @ManyToOne
     @JoinColumn(name = "vertex1_id")
     private Vertex vertexFrom;
