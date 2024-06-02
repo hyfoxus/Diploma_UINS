@@ -14,15 +14,12 @@ public class Scheme {
 
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "scheme_id")
+    private long level;
+
+    @OneToMany(mappedBy = "scheme", cascade = CascadeType.ALL)
     private List<Vertex> vertexes;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "scheme_id")
+    @OneToMany(mappedBy = "scheme", cascade = CascadeType.ALL)
     private List<Edge> edges;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "scheme_id")
-    private List<Vertex> ports;
 }

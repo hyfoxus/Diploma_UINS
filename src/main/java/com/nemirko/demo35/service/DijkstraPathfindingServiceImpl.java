@@ -24,19 +24,30 @@ public class DijkstraPathfindingServiceImpl implements NavigationService {
     private SchemeRepository schemeRepository;
 
     @Override
-    public List<List<Vertex>> getShortestPaths(long schemeId, long startId, long endId, int amountRoutes) {
+    public List<List<Vertex>> getShortestPaths(long startId, long endId, int amountRoutes) {
         Vertex startVertex = vertexRepository.findById(startId).orElse(null);
         Vertex endVertex = vertexRepository.findById(endId).orElse(null);
-        Scheme scheme = schemeRepository.findById(schemeId).orElse(null);
-        if (startVertex == null || endVertex == null || scheme == null) {
-            throw new IllegalStateException("One or both vertices not found or actually scheme not found");
+
+        if (startVertex == null || endVertex == null) {
+            throw new IllegalStateException("One or both vertices not found");
         }
 
-        if (!scheme.getVertexes().contains(startVertex) || !scheme.getVertexes().contains(endVertex)) {
-            throw new IllegalStateException("Start or end vertex not in the specified scheme");
+        Scheme scheme = findCommonSchemeWithLowestLevel(startVertex, endVertex);
+
+        if (scheme == null) {
+            throw new IllegalStateException("No common scheme found between the start and end vertices");
         }
 
         return findPaths(scheme, startVertex, endVertex, amountRoutes);
+    }
+
+    private Scheme findCommonSchemeWithLowestLevel(Vertex startVertex, Vertex endVertex) {
+        Set<Scheme> startSchemes = new HashSet<>(startVertex.getSchemes());
+        Set<Scheme> endSchemes = new HashSet<>(endVertex.getSchemes());
+
+        startSchemes.retainAll(endSchemes);
+
+        return startSchemes.stream().min(Comparator.comparingLong(Scheme::getLevel)).orElse(null);
     }
 
     private List<List<Vertex>> findPaths(Scheme scheme, Vertex start, Vertex end, int amountRoutes) {

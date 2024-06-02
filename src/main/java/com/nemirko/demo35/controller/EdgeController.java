@@ -1,6 +1,7 @@
 package com.nemirko.demo35.controller;
 
 import com.nemirko.demo35.entity.Edge;
+import com.nemirko.demo35.entity.EdgeType;
 import com.nemirko.demo35.service.EdgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +30,10 @@ public class EdgeController {
 
 
     @PostMapping
-    public ResponseEntity<Edge> save(@RequestParam int distance, @RequestParam long vertex1Id,
-                                     @RequestParam long vertex2Id, @RequestParam int direction) {
+    public ResponseEntity<Edge> save(@RequestParam int distance, @RequestParam long vertexFromId,
+                                     @RequestParam long vertexToId, @RequestParam int direction, @RequestParam EdgeType type) {
         try {
-            Edge edge = edgeService.create(distance, vertex1Id, vertex2Id, direction);
+            Edge edge = edgeService.create(distance, vertexFromId, vertexToId, direction, type);
             return ResponseEntity.ok(edge);
         } catch (IllegalStateException e) {
             return ResponseEntity.badRequest().build();

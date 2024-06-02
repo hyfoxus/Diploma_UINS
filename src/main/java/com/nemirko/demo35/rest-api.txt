@@ -1,6 +1,3 @@
-GET http://localhost:8080/api/vertex
-Accept: application/json
-
 ###
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
@@ -8,15 +5,19 @@ Content-Type: application/json
 {
   "name": "Enter",
   "description": "Main Entrance",
-  "type": "Crossroad",
+  "type": "Port",
   "availability": true,
   "level": 1
 }
 
-<> 2024-05-26T151644.415.json
-<> 2024-05-26T151630.415.json
-<> 2024-05-26T151229.415.json
-<> 2024-05-26T133122.415.json
+<> 2024-06-01T162850.200.json
+<> 2024-06-01T161558.200.json
+<> 2024-06-01T160311.500.json
+<> 2024-06-01T155821.500.json
+<> 2024-06-01T155149.500.json
+<> 2024-06-01T155101.500.json
+<> 2024-06-01T155010.500.json
+<> 2024-06-01T154859.500.json
 <> 2024-05-23T221556.200.json
 
 
@@ -32,8 +33,7 @@ Content-Type: application/json
   "level": 1
 }
 
-<> 2024-05-23T221541.200.json
-<> 2024-05-23T221526.400.json
+<> 2024-06-01T162904.200.json
 
 ###
 POST http://localhost:8080/api/vertex
@@ -46,6 +46,8 @@ Content-Type: application/json
   "availability": true,
   "level": 1
 }
+
+<> 2024-06-01T162914.200.json
 
 ###
 POST http://localhost:8080/api/vertex
@@ -59,17 +61,21 @@ Content-Type: application/json
   "level": 1
 }
 
+<> 2024-06-01T162919.200.json
+
 ###
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Toilet",
-  "description": "Toilet first floor",
-  "type": "Crossroad near ladder",
+  "name": "Crossroad near ladder",
+  "description": "Crossroad near ladder",
+  "type": "Crossroad",
   "availability": true,
   "level": 1
 }
+
+<> 2024-06-01T163101.200.json
 
 ###
 POST http://localhost:8080/api/vertex
@@ -78,10 +84,12 @@ Content-Type: application/json
 {
   "name": "Ladder",
   "description": "Ladder to second floor",
-  "type": "Crossroad",
+  "type": "Port",
   "availability": true,
   "level": 1
 }
+
+<> 2024-06-01T163121.200.json
 
 ###
 POST http://localhost:8080/api/vertex
@@ -95,6 +103,8 @@ Content-Type: application/json
   "level": 1
 }
 
+<> 2024-06-01T163127.200.json
+
 ###
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
@@ -106,6 +116,8 @@ Content-Type: application/json
   "availability": true,
   "level": 1
 }
+
+<> 2024-06-01T163132.200.json
 
 ###
 POST http://localhost:8080/api/vertex
@@ -119,6 +131,8 @@ Content-Type: application/json
   "level": 1
 }
 
+<> 2024-06-01T163349.200.json
+
 ###
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
@@ -126,10 +140,12 @@ Content-Type: application/json
 {
   "name": "Ladder from first floor",
   "description": "Ladder from First floor",
-  "type": "Crossroad",
+  "type": "Port",
   "availability": true,
   "level": 1
 }
+
+<> 2024-06-01T163353.200.json
 
 
 ###
@@ -144,6 +160,8 @@ Content-Type: application/json
   "level": 1
 }
 
+<> 2024-06-01T163402.200.json
+
 ###
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
@@ -151,10 +169,12 @@ Content-Type: application/json
 {
   "name": "Ladder to third flood",
   "description": "Ladder to third floor",
-  "type": "Crossroad",
+  "type": "Port",
   "availability": true,
   "level": 1
 }
+
+<> 2024-06-01T163407.200.json
 
 ###
 POST http://localhost:8080/api/vertex
@@ -168,6 +188,8 @@ Content-Type: application/json
   "level": 1
 }
 
+<> 2024-06-01T163415.200.json
+
 ###
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
@@ -179,6 +201,8 @@ Content-Type: application/json
   "availability": true,
   "level": 1
 }
+
+<> 2024-06-01T163420.200.json
 
 ###
 POST http://localhost:8080/api/vertex
@@ -192,6 +216,203 @@ Content-Type: application/json
   "level": 1
 }
 
+<> 2024-06-01T163423.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Crossroad Enter to circle",
+  "description": "Crossroad to Circle",
+  "type": "Crossroad",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163550.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Circle 17",
+  "description": "Circle",
+  "type": "Crossroad",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163554.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Circle Room 18",
+  "description": "Circle room",
+  "type": "Cabinet",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163558.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Circle 19",
+  "description": "Circle",
+  "type": "Crossroad",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163601.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Circle Room 20",
+  "description": "Circle room",
+  "type": "Cabinet",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163605.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Circle 21",
+  "description": "Circle",
+  "type": "Crossroad",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163607.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Circle Room 22",
+  "description": "Circle room",
+  "type": "Cabinet",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163613.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Circle 23",
+  "description": "Circle",
+  "type": "Crossroad",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163616.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Circle Room 24",
+  "description": "Circle room",
+  "type": "Cabinet",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163619.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Circle 25",
+  "description": "Circle",
+  "type": "Crossroad",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163622.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Circle Room 26",
+  "description": "Circle room",
+  "type": "Cabinet",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163624.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Circle 27",
+  "description": "Circle",
+  "type": "Crossroad",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163627.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Circle Room 28",
+  "description": "Circle room",
+  "type": "Cabinet",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163631.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Ladder from Second Floor",
+  "description": "Ladder from Second Floor",
+  "type": "Port",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163638.200.json
 
 
 ###
@@ -199,107 +420,82 @@ POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "very crossroad",
-  "description": "very big crossroad",
+  "name": "Office 30",
+  "description": "Office Third Floor",
+  "type": "Cabinet",
+  "availability": true,
+  "level": 1
+}
+
+<> 2024-06-01T163644.200.json
+
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Crossroad 31 Third Floor",
+  "description": "Crossroad 31 Third Floor",
   "type": "Crossroad",
   "availability": true,
   "level": 1
 }
 
-<> 2024-05-26T182816.415.json
-<> 2024-05-23T221633.200.json
-<> 2024-05-23T221623.200.json
-<> 2024-05-23T221546.200.json
-<> 2024-05-23T221530.400.json
-<> 2024-05-20T105009.404.json
+<> 2024-06-01T163648.200.json
 
 ###
-GET http://localhost:8080/api/vertex
-
-<> 2024-05-26T151952.200.json
-
-###
-GET http://localhost:8080/api/vertex/1
-
-###
-POST http://localhost:8080/api/corridors
+POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "distance": 100,
-  "vertexFrom": "1",
-  "vertexTo": "2"
+  "name": "Storage 32",
+  "description": "Storage Third Floor",
+  "type": "Cabinet",
+  "availability": true,
+  "level": 1
 }
 
+<> 2024-06-01T163651.200.json
 
 ###
-POST http://localhost:8080/api/edge?distance=200&vertex1Id=5&vertex2Id=3&direction=0
-
+POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
+{
+  "name": "Storage 33",
+  "description": "Storage Third Floor",
+  "type": "Cabinet",
+  "availability": true,
+  "level": 1
+}
 
-<> 2024-05-27T210324.200.json
-<> 2024-05-27T210308.200.json
-<> 2024-05-27T210253.200.json
-<> 2024-05-27T210234.200.json
-<> 2024-05-26T185918.200.json
-<> 2024-05-26T182152.500.json
-<> 2024-05-26T152017.500.json
-<> 2024-05-26T151940.500.json
-<> 2024-05-26T151908.500.json
-<> 2024-05-26T151857.404.json
-<> 2024-05-23T221659.200.json
-<> 2024-05-23T221653.200.json
-<> 2024-05-22T205619.200.json
+<> 2024-06-01T163654.200.json
 
 ###
-
-GET http://localhost:8080/api/edge
-
-<> 2024-05-28T182304.200.json
-<> 2024-05-26T160738.200.json
-
-
-###
-GET http://localhost:8080/api/scheme/
-
-<> 2024-05-28T182436.200.json
-<> 2024-05-28T182327.200.json
-<> 2024-05-28T182256.404.json
-
-###
-POST http://localhost:8080/api/scheme/
-Content-Type: application/x-www-form-urlencoded
-
-vertexIds=1&vertexIds=2&vertexIds=3&vertexIds=4&vertexIds=5&edgeIds=1&edgeIds=2&edgeIds=3&edgeIds=4
-
-<> 2024-05-28T185555.200.json
-
-###
-
-GET http://localhost:8080/api/navigation/shortest-paths?vertex1Id=1&vertex2Id=3$amountRoutes=1
+POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
+{
+  "name": "Crossroad 34 Third Floor",
+  "description": "Crossroad 34 Third Floor",
+  "type": "Crossroad",
+  "availability": true,
+  "level": 1
+}
 
+<> 2024-06-01T163656.200.json
 
+###
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
 
+{
+  "name": "Storage 35",
+  "description": "Toilet Third Floor",
+  "type": "Cabinet",
+  "availability": true,
+  "level": 1
+}
 
+<> 2024-06-01T163659.200.json
 
-<> 2024-05-29T143747.200.json
-<> 2024-05-29T143700.400.json
-<> 2024-05-29T143631.400.json
-<> 2024-05-29T143610.404.json
-<> 2024-05-29T143601.400.json
-<> 2024-05-29T143417.400.json
-<> 2024-05-28T185549.400.json
-<> 2024-05-28T182402.200.json
-<> 2024-05-28T182222.404.json
-<> 2024-05-28T182200.404.json
-<> 2024-05-28T182041.404.json
-<> 2024-05-28T122403.404.json
-<> 2024-05-28T122208.404.json
-<> 2024-05-28T122040.405.json
-<> 2024-05-27T213917.500.json
-<> 2024-05-27T213826.404.json
-<> 2024-05-27T213803.404.json
-<> 2024-05-27T213646.404.json

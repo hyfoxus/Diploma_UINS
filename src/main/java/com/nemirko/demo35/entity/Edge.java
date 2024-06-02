@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -18,7 +20,9 @@ public class Edge {
 
     private EdgeType type;
 
-    private long scheme_id;
+    @ManyToMany
+    @JoinColumn(name = "scheme_id")
+    private List<Scheme> schemes;
 
     @ManyToOne
     @JoinColumn(name = "vertex1_id")

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -20,15 +21,15 @@ public class Vertex {
     @ElementCollection
     private Map<Long, Integer> angles = new HashMap<>();
 
-    private long scheme_id;
+    @ManyToMany
+    @JoinColumn(name = "scheme_id")
+    List<Scheme> schemes;
 
     private String name;
 
     private String description;
 
     private VertexType type;
-
-    private int level;
 
     private boolean availability;
 

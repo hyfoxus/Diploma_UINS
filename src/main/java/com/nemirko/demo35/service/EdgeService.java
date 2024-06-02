@@ -1,6 +1,7 @@
 package com.nemirko.demo35.service;
 
 import com.nemirko.demo35.entity.Edge;
+import com.nemirko.demo35.entity.EdgeType;
 import com.nemirko.demo35.entity.Vertex;
 import com.nemirko.demo35.repository.EdgeRepository;
 import com.nemirko.demo35.repository.VertexRepository;
@@ -31,7 +32,7 @@ public class EdgeService {
 
 
     @Transactional
-    public Edge create(int distance, long vertexFromId, long vertexToId, int direction) {
+    public Edge create(int distance, long vertexFromId, long vertexToId, int direction, EdgeType type) {
         Optional<Vertex> vertex1 = vertexRepository.findById(vertexFromId);
         Optional<Vertex> vertex2 = vertexRepository.findById(vertexToId);
         if (vertex1.isEmpty() || vertex2.isEmpty()) {
@@ -41,12 +42,15 @@ public class EdgeService {
         edge.setDistance(distance);
         edge.setVertexFrom(vertex1.get());
         edge.setVertexTo(vertex2.get());
-
+        edge.setType(type);
+        edgeRepository.save(edge);
         vertex1.get().getAngles().put(edge.getId(), direction);
         vertex2.get().getAngles().put(edge.getId(), (180 + direction) % 360);
+
         vertexRepository.save(vertex1.get());
         vertexRepository.save(vertex2.get());
-        return edgeRepository.save(edge);
+
+        return edge;
     }
 
 
