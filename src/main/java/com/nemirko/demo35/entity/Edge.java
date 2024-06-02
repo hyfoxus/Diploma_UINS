@@ -20,8 +20,7 @@ public class Edge {
 
     private EdgeType type;
 
-    @ManyToMany
-    @JoinColumn(name = "scheme_id")
+    @ManyToMany(mappedBy = "edges")
     private List<Scheme> schemes;
 
     @ManyToOne

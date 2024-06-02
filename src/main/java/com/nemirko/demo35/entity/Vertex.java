@@ -21,8 +21,7 @@ public class Vertex {
     @ElementCollection
     private Map<Long, Integer> angles = new HashMap<>();
 
-    @ManyToMany
-    @JoinColumn(name = "scheme_id")
+    @ManyToMany(mappedBy = "vertexes")
     List<Scheme> schemes;
 
     private String name;

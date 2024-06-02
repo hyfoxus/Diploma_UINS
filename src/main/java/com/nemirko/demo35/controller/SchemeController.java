@@ -25,8 +25,8 @@ public class SchemeController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Scheme> createScheme(@RequestParam List<Long> vertexIds, @RequestParam List<Long> edgeIds) {
-        Scheme scheme = schemeService.create(vertexIds, edgeIds);
+    public ResponseEntity<Scheme> createScheme(@RequestParam List<Long> vertexIds, @RequestParam List<Long> edgeIds, @RequestParam long level) {
+        Scheme scheme = schemeService.create(vertexIds, edgeIds, level);
         return ResponseEntity.ok(scheme);
     }
 }

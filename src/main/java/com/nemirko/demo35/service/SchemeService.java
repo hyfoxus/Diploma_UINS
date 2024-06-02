@@ -35,13 +35,14 @@ public class SchemeService {
 
 
     @Transactional
-    public Scheme create(List<Long> vertexIds, List<Long> edgeIds) {
+    public Scheme create(List<Long> vertexIds, List<Long> edgeIds, long level) {
         List<Vertex> vertexes = vertexRepository.findAllById(vertexIds);
         List<Edge> edges = edgeRepository.findAllById(edgeIds);
 
         Scheme scheme = new Scheme();
         scheme.setVertexes(vertexes);
         scheme.setEdges(edges);
+        scheme.setLevel(level);
 
         return schemeRepository.save(scheme);
     }

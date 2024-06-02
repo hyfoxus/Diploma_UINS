@@ -16,10 +16,20 @@ public class Scheme {
 
     private long level;
 
-    @OneToMany(mappedBy = "scheme", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(
+            name = "scheme_vertexes",
+            joinColumns = @JoinColumn(name = "scheme_id"),
+            inverseJoinColumns = @JoinColumn(name = "vertex_id")
+    )
     private List<Vertex> vertexes;
 
-    @OneToMany(mappedBy = "scheme", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(
+            name = "scheme_edges",
+            joinColumns = @JoinColumn(name = "scheme_id"),
+            inverseJoinColumns = @JoinColumn(name = "edge_id")
+    )
     private List<Edge> edges;
 
 }
