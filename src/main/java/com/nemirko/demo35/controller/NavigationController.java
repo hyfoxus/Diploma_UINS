@@ -15,8 +15,7 @@ public class NavigationController {
     private final NavigationService navigationService;
 
     @GetMapping("/shortest-paths")
-    public List<List<Vertex>> getShortestPaths(@RequestParam long vertexFromId, @RequestParam long verteToId,
-                                                    @RequestParam int amountRoutes) {
-        return navigationService.getShortestPaths(vertexFromId, verteToId, amountRoutes);
+    public List<List<Vertex>> getShortestPaths(@RequestParam long vertexFromId, @RequestParam long vertexToId, @RequestParam int amountRoutes) {
+        return navigationService.getShortestPaths(vertexFromId, vertexToId, amountRoutes);
     }
 }

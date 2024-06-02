@@ -75,15 +75,15 @@ public class DijkstraPathfindingServiceImpl implements NavigationService {
                 continue;
             }
 
-            for (Map.Entry<Long, Integer> neighborEntry : currentVertex.getAngles().entrySet()) {
-                Vertex neighbor = vertexRepository.findById(neighborEntry.getKey()).orElse(null);
-                if (neighbor == null || !scheme.getVertexes().contains(neighbor)) {
-                    continue;
+            for (Edge edge : scheme.getEdges()) {
+                Vertex neighbor = null;
+                if (edge.getVertexFrom().equals(currentVertex)) {
+                    neighbor = edge.getVertexTo();
+                } else if (edge.getVertexTo().equals(currentVertex)) {
+                    neighbor = edge.getVertexFrom();
                 }
 
-                // Fetch the edge to get the distance
-                Edge edge = edgeRepository.findByVertexFromAndVertexTo(currentVertex, neighbor);
-                if (edge == null || !scheme.getEdges().contains(edge)) {
+                if (neighbor == null || !scheme.getVertexes().contains(neighbor)) {
                     continue;
                 }
 
