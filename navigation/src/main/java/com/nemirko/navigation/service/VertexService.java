@@ -10,49 +10,82 @@ import java.util.Optional;
 
 @Service
 public class VertexService {
-    private final VertexRepository vertexRepository;
+  private final VertexRepository vertexRepository;
 
-    @Autowired
-    private EdgeRepository edgeRepository;
+  @Autowired private EdgeRepository edgeRepository;
 
-    @Autowired
-    public VertexService(VertexRepository repository) {
-        this.vertexRepository = repository;
+  @Autowired
+  public VertexService(VertexRepository repository) {
+    this.vertexRepository = repository;
+  }
+
+  public List<Vertex> findAll() {
+    return vertexRepository.findAll();
+  }
+
+  public Vertex save(Vertex vertex) {
+    return vertexRepository.save(vertex);
+  }
+
+  public Vertex findById(Long id) {
+    return vertexRepository.findById(id).orElse(null);
+  }
+
+  public List<Vertex> findByAvailability(boolean availability) {
+    return vertexRepository.findByAvailability(availability);
+  }
+
+  public Vertex edit(Long id, Vertex updatedVertex) {
+    // Fetch the vertex by its ID
+    Optional<Vertex> vertexOpt = vertexRepository.findById(id);
+
+    if (vertexOpt.isPresent()) {
+      Vertex vertex = vertexOpt.get();
+
+      if (updatedVertex.getName() != null && !updatedVertex.getName().isEmpty()) {
+        vertex.setName(updatedVertex.getName());
+      }
+
+      // Check if the updated availability field is not empty
+        if (updatedVertex.getAvailability() != vertex.getAvailability()) {
+            // Only update the availability if the updatedVertex's availability is not null
+            if (updatedVertex.getAvailability() != null) {
+                vertex.setAvailability(updatedVertex.getAvailability());
+            }
+        }
+
+        if (updatedVertex.getDescription() != null && !updatedVertex.getDescription().isEmpty()) {
+            vertex.setDescription(updatedVertex.getDescription());
+        }
+      // You can update other properties here
+
+      // Save the updated vertex
+      return vertexRepository.save(vertex);
+    } else {
+      // Handle the case where the vertex is not found
+      throw new RuntimeException("Vertex with id " + id + " not found.");
     }
+  }
 
-    public List<Vertex> findAll() {
-        return vertexRepository.findAll();
-    }
+  public void delete(Long id) {
+    // Fetch the vertex by its ID
+    Optional<Vertex> vertexOpt = vertexRepository.findById(id);
 
-    public Vertex save(Vertex vertex) {
-        return vertexRepository.save(vertex);
-    }
+    if (vertexOpt.isPresent()) {
+      Vertex vertex = vertexOpt.get();
 
-    public Vertex findById(Long id) {
-        return vertexRepository.findById(id).orElse(null);
-    }
-
-    public List<Vertex> findByAvailability(boolean availability) {
-        return vertexRepository.findByAvailability(availability);
-    }
-
-    public void delete(Long id) {
-// Fetch the vertex by its ID
-        Optional<Vertex> vertexOpt = vertexRepository.findById(id);
-
-        if (vertexOpt.isPresent()) {
-            Vertex vertex = vertexOpt.get();
-
-            // Iterate over the neighbors and delete corresponding edges
-            vertex.getAngles().forEach((edgeId, direction) -> {
+      // Iterate over the neighbors and delete corresponding edges
+      vertex
+          .getAngles()
+          .forEach(
+              (edgeId, direction) -> {
                 // Fetch the edge by its ID and delete it if present
                 edgeRepository.findById(edgeId).ifPresent(edgeRepository::delete);
-            });
-        } else {
-            // Handle the case where the vertex is not found
-            throw new RuntimeException("Vertex with id " + id + " not found.");
-        }
-        vertexRepository.deleteById(id);
+              });
+    } else {
+      // Handle the case where the vertex is not found
+      throw new RuntimeException("Vertex with id " + id + " not found.");
     }
-
+    vertexRepository.deleteById(id);
+  }
 }

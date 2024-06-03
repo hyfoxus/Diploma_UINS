@@ -14,7 +14,7 @@ public class Scheme {
 
     private String description;
 
-    private long level;
+    private Long level;
 
     @ManyToMany
     @JoinTable(

@@ -20,9 +20,6 @@ public class Edge {
 
     private EdgeType type;
 
-    @ManyToMany(mappedBy = "edges")
-    private List<Scheme> schemes;
-
     @ManyToOne
     @JoinColumn(name = "vertex1_id")
     private Vertex vertexFrom;

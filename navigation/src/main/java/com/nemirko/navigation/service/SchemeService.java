@@ -1,6 +1,7 @@
 package com.nemirko.navigation.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.nemirko.navigation.entity.Edge;
 import com.nemirko.navigation.entity.Scheme;
@@ -45,6 +46,31 @@ public class SchemeService {
         scheme.setLevel(level);
 
         return schemeRepository.save(scheme);
+    }
+
+    @Transactional
+    public Scheme edit(Long id, Scheme updatedScheme) {
+        Optional<Scheme> schemeOptional = schemeRepository.findById(id);
+
+        if (schemeOptional.isPresent()) {
+            Scheme scheme = schemeOptional.get();
+
+            if (updatedScheme.getVertexes() != null) {
+                scheme.setVertexes(updatedScheme.getVertexes());
+            }
+
+            if (updatedScheme.getEdges() != null) {
+                scheme.setEdges(updatedScheme.getEdges());
+            }
+
+            if (updatedScheme.getLevel() != null) {
+                scheme.setLevel(updatedScheme.getLevel());
+            }
+
+            return schemeRepository.save(scheme);
+        } else {
+            throw new RuntimeException("Scheme with id " + id + " not found.");
+        }
     }
 }
 

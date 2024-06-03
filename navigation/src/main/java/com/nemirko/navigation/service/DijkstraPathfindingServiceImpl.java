@@ -42,8 +42,8 @@ public class DijkstraPathfindingServiceImpl implements NavigationService {
     }
 
     private Scheme findCommonSchemeWithLowestLevel(Vertex startVertex, Vertex endVertex) {
-        Set<Scheme> startSchemes = new HashSet<>(startVertex.getSchemes());
-        Set<Scheme> endSchemes = new HashSet<>(endVertex.getSchemes());
+        List<Scheme> startSchemes = schemeRepository.findAllByVertex(startVertex);
+        List<Scheme> endSchemes = schemeRepository.findAllByVertex(endVertex);
 
         startSchemes.retainAll(endSchemes);
 

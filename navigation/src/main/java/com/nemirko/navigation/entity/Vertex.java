@@ -21,15 +21,12 @@ public class Vertex {
     @ElementCollection
     private Map<Long, Integer> angles = new HashMap<>();
 
-    @ManyToMany(mappedBy = "vertexes")
-    List<Scheme> schemes;
-
     private String name;
 
     private String description;
 
     private VertexType type;
 
-    private boolean availability;
+    private Boolean availability;
 
 }
