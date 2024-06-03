@@ -16,6 +16,7 @@ public class Scheme {
 
     private Long level;
 
+
     @ManyToMany
     @JoinTable(
             name = "scheme_vertexes",
@@ -32,4 +33,12 @@ public class Scheme {
     )
     private List<Edge> edges;
 
+
+    @ElementCollection
+    @CollectionTable(
+            name = "scheme_sub_scheme_ids",
+            joinColumns = @JoinColumn(name = "scheme_id")
+    )
+    @Column(name = "sub_scheme_id")
+    private List<Long> subSchemeIds;
 }

@@ -29,4 +29,5 @@ public class Vertex {
 
     private Boolean availability;
 
+
 }

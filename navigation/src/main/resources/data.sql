@@ -286,3 +286,7 @@ INSERT INTO "PUBLIC"."SCHEME_VERTEXES" VALUES
                                            (4, 33),
                                            (4, 34),
                                            (4, 35);
+INSERT INTO "PUBLIC"."SCHEME_SUB_SCHEME_IDS" VALUES
+                                            (4, 1),
+                                            (4, 2),
+                                            (4, 3);
