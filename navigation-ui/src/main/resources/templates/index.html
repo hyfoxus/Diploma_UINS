@@ -11,10 +11,7 @@
 <div>
     <label for="schemeSelect">Select Scheme:</label>
     <select id="schemeSelect" onchange="loadScheme()">
-        <option value="1">Scheme id 1</option>
-        <option value="2">Scheme id 2</option>
-        <option value="3">Scheme id 3</option>
-        <option value="4">Scheme id 4</option>
+        <!-- Options will be populated dynamically -->
     </select>
 </div>
 <div class="container">
@@ -33,15 +30,16 @@
     };
     var options = {
         edges: {
-            arrows: {
-                to: {enabled: true, scaleFactor: 1},
-                from: {enabled: true, scaleFactor: 1}
-            }
+            smooth: false // Ensure edges are straight
+        },
+        physics: {
+            enabled: false // Disable physics to maintain angles
         }
     };
 
     var network = new vis.Network(container, data, options);
 
+    const SCALE_FACTOR = 20;
     function loadScheme() {
         var scheme = document.getElementById('schemeSelect').value;
         fetch(`/api/graph/${scheme}`)
@@ -49,17 +47,72 @@
             .then(graph => {
                 nodes.clear();
                 edges.clear();
-                nodes.add(graph.nodes);
-                edges.add(graph.edges);
+
+                let nodePositions = {};
+                let visitedNodes = new Set();
+
+                function dfs(nodeId, x, y) {
+                    if (visitedNodes.has(nodeId)) return;
+                    visitedNodes.add(nodeId);
+                    nodePositions[nodeId] = { x, y };
+
+                    graph.edges.forEach(edge => {
+                        if (edge.from === nodeId && !visitedNodes.has(edge.to)) {
+                            const length = (edge.length || 100) * SCALE_FACTOR;
+                            const angle = edge.direction - 90 || 0;
+                            const radianAngle = angle * (Math.PI / 180);
+                            const newX = x + length * Math.cos(radianAngle);
+                            const newY = y + length * Math.sin(radianAngle);
+                            dfs(edge.to, newX, newY);
+                        } else if (edge.to === nodeId && !visitedNodes.has(edge.from)) {
+                            const length = edge.length || 100;
+                            const angle = edge.direction || 0;
+                            const radianAngle = (angle + 180) * (Math.PI / 180);
+                            const newX = x + length * Math.cos(radianAngle);
+                            const newY = y + length * Math.sin(radianAngle);
+                            dfs(edge.from, newX, newY);
+                        }
+                    });
+                }
+
+                if (graph.nodes.length > 0) {
+                    dfs(graph.nodes[0].id, 0, 0);
+                }
+
+                graph.nodes.forEach(node => {
+                    if (nodePositions[node.id]) {
+                        node.x = nodePositions[node.id].x;
+                        node.y = nodePositions[node.id].y;
+                    }
+                    nodes.add({
+                        ...node,
+                        shape: 'dot',
+                        size: 10,
+                        title: `Node ${node.id}`
+                    });
+                });
+
+                edges.add(graph.edges.map(edge => ({
+                    ...edge
+                })));
             });
     }
 
-    fetch('/api/graph')
-        .then(response => response.json())
-        .then(graph => {
-            nodes.add(graph.nodes);
-            edges.add(graph.edges);
-        });
+    window.onload = function() {
+        fetch('/api/graph/list')
+            .then(response => response.json())
+            .then(schemes => {
+                var schemeSelect = document.getElementById('schemeSelect');
+                schemes.forEach(schemeId => {
+                    var option = document.createElement('option');
+                    option.value = schemeId;
+                    option.textContent = `Scheme id ${schemeId}`;
+                    schemeSelect.appendChild(option);
+                });
+                schemeSelect.value = schemes[0];
+                loadScheme();
+            });
+    };
 
     network.on("click", function (params) {
         if (params.nodes.length > 0) {
@@ -97,11 +150,7 @@
             body: JSON.stringify(updatedGraph)
         });
     }
-    // Set default scheme and load it on page load
-    window.onload = function() {
-        document.getElementById('schemeSelect').value = '1'; // Set default scheme
-        loadScheme(); // Load default scheme
-    };
+
 </script>
 </body>
 </html>

@@ -11,4 +11,5 @@ public class EdgeDTO {
     private Long from;
     private Long to;
     private int length;
+    private int direction;
 }

@@ -18,9 +18,12 @@ public class SchemeService {
                 .collect(Collectors.toList());
 
         List<EdgeDTO> edges = scheme.getEdges().stream()
-                .map(edge -> new EdgeDTO(edge.getVertexFrom().getId(), edge.getVertexTo().getId(), edge.getDistance()))
+                .map(edge -> new EdgeDTO(edge.getVertexFrom().getId(), edge.getVertexTo().getId(), edge.getDistance(), edge.getDirection()))
                 .collect(Collectors.toList());
 
         return new GraphDTO(nodes, edges);
+    }
+    public List<Long> transformToListOfLongs(List<Scheme> list) {
+        return list.stream().map(Scheme::getId).toList();
     }
 }
