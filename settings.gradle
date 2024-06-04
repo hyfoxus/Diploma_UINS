@@ -1,1 +1,2 @@
-rootProject.name = 'demo35'
+rootProject.name = 'Diploma_UINS'
+include 'navigation', 'navigation-ui'
