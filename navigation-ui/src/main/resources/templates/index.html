@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graph Editor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+<div>
+    <label for="schemeSelect">Select Scheme:</label>
+    <select id="schemeSelect" onchange="loadScheme()">
+        <option value="1">Scheme id 1</option>
+        <option value="2">Scheme id 2</option>
+        <option value="3">Scheme id 3</option>
+        <option value="4">Scheme id 4</option>
+    </select>
+</div>
+<div class="container">
+    <div id="mynetwork"></div>
+    <div id="details"></div>
+</div>
+<button onclick="saveGraph()">Save Graph</button>
+<script>
+    var nodes = new vis.DataSet([]);
+    var edges = new vis.DataSet([]);
+
+    var container = document.getElementById('mynetwork');
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+    var options = {
+        edges: {
+            arrows: {
+                to: {enabled: true, scaleFactor: 1},
+                from: {enabled: true, scaleFactor: 1}
+            }
+        }
+    };
+
+    var network = new vis.Network(container, data, options);
+
+    function loadScheme() {
+        var scheme = document.getElementById('schemeSelect').value;
+        fetch(`/api/graph/${scheme}`)
+            .then(response => response.json())
+            .then(graph => {
+                nodes.clear();
+                edges.clear();
+                nodes.add(graph.nodes);
+                edges.add(graph.edges);
+            });
+    }
+
+    fetch('/api/graph')
+        .then(response => response.json())
+        .then(graph => {
+            nodes.add(graph.nodes);
+            edges.add(graph.edges);
+        });
+
+    network.on("click", function (params) {
+        if (params.nodes.length > 0) {
+            var nodeId = params.nodes[0];
+            var node = nodes.get(nodeId);
+            displayDetails(node, 'Node');
+        } else if (params.edges.length > 0) {
+            var edgeId = params.edges[0];
+            var edge = edges.get(edgeId);
+            displayDetails(edge, 'Edge');
+        }
+    });
+
+    function displayDetails(item, type) {
+        var detailsDiv = document.getElementById('details');
+        detailsDiv.innerHTML = `<h3>${type} Details</h3>`;
+        for (var key in item) {
+            if (item.hasOwnProperty(key)) {
+                detailsDiv.innerHTML += `<p><strong>${key}:</strong> ${item[key]}</p>`;
+            }
+        }
+    }
+
+    function saveGraph() {
+        var updatedGraph = {
+            nodes: nodes.get(),
+            edges: edges.get()
+        };
+
+        fetch('/api/graph', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedGraph)
+        });
+    }
+    // Set default scheme and load it on page load
+    window.onload = function() {
+        document.getElementById('schemeSelect').value = '1'; // Set default scheme
+        loadScheme(); // Load default scheme
+    };
+</script>
+</body>
+</html>

@@ -19,7 +19,7 @@ public class Vertex {
     private long id;
 
     @ElementCollection
-    private Map<Long, Integer> angles = new HashMap<>();
+    private Map<Long, Integer> angles = new HashMap<>(); //key is an id of the edge adjustment to this vertex and value is to where this edge goes
 
     private String name;
 

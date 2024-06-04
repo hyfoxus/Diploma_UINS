@@ -20,6 +20,8 @@ public class Edge {
 
     private EdgeType type;
 
+    private int direction;
+
     @ManyToOne
     @JoinColumn(name = "vertex1_id")
     private Vertex vertexFrom;

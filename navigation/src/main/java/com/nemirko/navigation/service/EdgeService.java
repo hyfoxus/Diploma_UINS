@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -16,10 +17,16 @@ import java.util.Optional;
 public class EdgeService {
 
     @Autowired
-    private VertexRepository vertexRepository;
+    private final VertexRepository vertexRepository;
 
     @Autowired
-    private EdgeRepository edgeRepository;
+    private final EdgeRepository edgeRepository;
+
+    public EdgeService(VertexRepository vertexRepository, EdgeRepository edgeRepository) {
+        this.vertexRepository = vertexRepository;
+        this.edgeRepository = edgeRepository;
+    }
+
 
     public List<Edge> getAll() {
         return edgeRepository.findAll();
@@ -43,7 +50,9 @@ public class EdgeService {
         edge.setVertexFrom(vertex1.get());
         edge.setVertexTo(vertex2.get());
         edge.setType(type);
+        edge.setDirection(direction);
         edgeRepository.save(edge);
+
         vertex1.get().getAngles().put(edge.getId(), direction);
         vertex2.get().getAngles().put(edge.getId(), (180 + direction) % 360);
 

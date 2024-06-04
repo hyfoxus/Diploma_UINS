@@ -1,6 +1,7 @@
 CREATE SEQUENCE "PUBLIC"."EDGE_SEQ" START WITH 1 INCREMENT BY 50;
 CREATE SEQUENCE "PUBLIC"."VERTEX_SEQ" START WITH 1 INCREMENT BY 50;
 CREATE MEMORY TABLE "PUBLIC"."EDGE"(
+                                       "DIRECTION" INTEGER NOT NULL,
                                        "DISTANCE" INTEGER NOT NULL,
                                        "TYPE" TINYINT,
                                        "ID" BIGINT NOT NULL,
