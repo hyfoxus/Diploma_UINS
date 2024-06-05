@@ -1,11 +1,48 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
+
+#toolbar {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+#panel {
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+#mynetwork {
+    flex: 3;
+    width: 800px;
+    height: 100vh;
+    border: 1px solid lightgray;
+    background-color: #f0f0f0; /* Light background color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 10px; /* Space between mynetwork and details */
+}
+
 #details {
+    flex: 1;
     width: 300px;
-    height: 600px; /* Match the height of mynetwork */
+    height: 100vh; /* Match the height of mynetwork */
     margin-top: 0; /* Remove any top margin */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: #f0f0f0;
     font-family: Arial, sans-serif;
     font-size: 0.9em;
     overflow-y: auto; /* Enable vertical scrolling */
@@ -56,20 +93,4 @@
 #details td:last-child {
     color: #555;
     width: 70%;
-}
-
-.container {
-    display: flex;
-    align-items: flex-start; /* Align items at the start of the container */
-}
-
-#mynetwork {
-    width: 800px;
-    height: 600px;
-    border: 1px solid lightgray;
-    background-color: #f0f0f0; /* Light background color */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    padding: 10px; /* Padding inside the div */
-    margin-right: 20px; /* Space between mynetwork and details */
 }

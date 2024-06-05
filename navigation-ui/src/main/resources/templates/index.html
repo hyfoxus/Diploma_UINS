@@ -8,11 +8,12 @@
     <link href="styles.css" rel="stylesheet" />
 </head>
 <body>
-<div>
+<div id="toolbar">
     <label for="schemeSelect">Select Scheme:</label>
     <select id="schemeSelect" onchange="loadScheme()">
         <!-- Options will be populated dynamically -->
     </select>
+    <button onclick="saveGraph()">Save Graph</button>
 </div>
 <div class="container">
     <div id="mynetwork"></div>
@@ -59,7 +60,7 @@
                     graph.edges.forEach(edge => {
                         if (edge.from === nodeId && !visitedNodes.has(edge.to)) {
                             const length = (edge.length || 100) * SCALE_FACTOR;
-                            const angle = edge.direction - 90 || 0;
+                            const angle = (edge.direction - 90) % 360 || 0; //(edge.angle - 90) * (Math.PI / 180)
                             const radianAngle = angle * (Math.PI / 180);
                             const newX = x + length * Math.cos(radianAngle);
                             const newY = y + length * Math.sin(radianAngle);
@@ -125,6 +126,70 @@
             displayDetails(edge, 'Edge');
         }
     });
+
+    network.on("dragEnd", function (params) {
+        var movedNodeId = params.nodes[0];
+        var positions = network.getPositions(movedNodeId);
+        var movedNodePosition = positions[movedNodeId];
+
+        // Обновляем координаты перемещенной ноды
+        nodes.update({
+            id: movedNodeId,
+            x: movedNodePosition.x,
+            y: movedNodePosition.y
+        });
+
+        updateEdgeLengthsAndAngles(movedNodeId);
+    });
+
+    function updateEdgeLengthsAndAngles(movedNodeId) {
+        var movedNode = nodes.get(movedNodeId);
+
+        edges.forEach(edge => {
+            if (edge.from === movedNodeId || edge.to === movedNodeId) {
+                var fromNode = nodes.get(edge.from);
+                var toNode = nodes.get(edge.to);
+
+                // Если перемещенная нода является начальной точкой ребра
+                if (edge.from === movedNodeId) {
+                    fromNode = movedNode;
+                }
+
+                // Если перемещенная нода является конечной точкой ребра
+                if (edge.to === movedNodeId) {
+                    toNode = movedNode;
+                }
+
+                var dx = toNode.x - fromNode.x;
+                var dy = toNode.y - fromNode.y;
+
+                var length = Math.sqrt(dx * dx + dy * dy) / SCALE_FACTOR;
+                var angle = Math.atan2(dy, dx) * (180 / Math.PI);
+
+                // Round length to nearest integer
+                length = Math.round(length);
+
+                // Round angle to nearest multiple of 5
+                angle = Math.round(angle / 5) * 5;
+
+                console.log(`Updating edge ${edge.id}: length=${length}, angle=${angle}`);
+
+                edges.update({
+                    id: edge.id,
+                    length: length,
+                    direction: (angle + 90) % 360
+                });
+
+                //Принудительно обновляем положение узлов
+                nodes.update([
+                    { id: fromNode.id, x: fromNode.x, y: fromNode.y },
+                    { id: toNode.id, x: toNode.x, y: toNode.y }
+                ]);
+            }
+        });
+        // Перерисовываем граф
+        network.redraw();
+    }
 
     function displayDetails(item, type) {
         var detailsDiv = document.getElementById('details');
