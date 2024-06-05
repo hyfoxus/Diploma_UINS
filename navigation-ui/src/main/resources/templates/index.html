@@ -172,12 +172,20 @@
                 // Round angle to nearest multiple of 5
                 angle = Math.round(angle / 5) * 5;
 
+                // Normalize angle to be positive
+                if (angle < 0) {
+                    angle += 360;
+                }
+
+                // Adjust direction based on whether the moved node is 'from' or 'to'
+                var direction = (edge.from === movedNodeId) ? (angle + 90) % 360 : (angle + 270) % 360;
+
                 console.log(`Updating edge ${edge.id}: length=${length}, angle=${angle}`);
 
                 edges.update({
                     id: edge.id,
                     length: length,
-                    direction: (angle + 90) % 360
+                    direction: direction
                 });
 
                 //Принудительно обновляем положение узлов
