@@ -3,9 +3,7 @@ package com.nemirko.navigation.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.nemirko.navigation.entity.Edge;
-import com.nemirko.navigation.entity.Scheme;
-import com.nemirko.navigation.entity.Vertex;
+import com.nemirko.navigation.entity.*;
 import com.nemirko.navigation.repository.EdgeRepository;
 import com.nemirko.navigation.repository.SchemeRepository;
 import com.nemirko.navigation.repository.VertexRepository;
@@ -36,7 +34,7 @@ public class SchemeService {
 
 
     @Transactional
-    public Scheme create(List<Long> vertexIds, List<Long> edgeIds, long level) {
+    public Scheme create(List<Long> vertexIds, List<Long> edgeIds, long level, String description) {
         List<Vertex> vertexes = vertexRepository.findAllById(vertexIds);
         List<Edge> edges = edgeRepository.findAllById(edgeIds);
 
@@ -44,9 +42,49 @@ public class SchemeService {
         scheme.setVertexes(vertexes);
         scheme.setEdges(edges);
         scheme.setLevel(level);
+        scheme.setDescription(description);
 
         return schemeRepository.save(scheme);
     }
+
+    @Transactional
+    public Scheme createAndAddVertexToScheme(Long schemeId, String name, String description, VertexType type, Boolean availability) {
+        Scheme scheme = schemeRepository.findById(schemeId).orElseThrow(() -> new RuntimeException("Scheme not found"));
+
+        Vertex vertex = new Vertex();
+        vertex.setName(name);
+        vertex.setDescription(description);
+        vertex.setType(type);
+        vertex.setAvailability(availability);
+        Vertex savedVertex = vertexRepository.save(vertex);
+
+        scheme.getVertexes().add(savedVertex);
+        return schemeRepository.save(scheme);
+    }
+
+    @Transactional
+    public Scheme createAndAddEdgeToScheme(Long schemeId, int distance, long vertexFromId, long vertexToId, int direction, EdgeType type) {
+        Scheme scheme = schemeRepository.findById(schemeId).orElseThrow(() -> new RuntimeException("Scheme not found"));
+        Vertex fromVertex = vertexRepository.findById(vertexFromId).orElseThrow(() -> new RuntimeException("From Vertex not found"));
+        Vertex toVertex = vertexRepository.findById(vertexToId).orElseThrow(() -> new RuntimeException("To Vertex not found"));
+
+        Edge edge = new Edge();
+        edge.setDistance(distance);
+        edge.setVertexFrom(fromVertex);
+        edge.setVertexTo(toVertex);
+        edge.setType(type);
+        edge.setDirection(direction);
+        Edge savedEdge = edgeRepository.save(edge);
+
+        fromVertex.getAngles().put(savedEdge.getId(), direction);
+        toVertex.getAngles().put(savedEdge.getId(), (180 + direction) % 360);
+        vertexRepository.save(fromVertex);
+        vertexRepository.save(toVertex);
+
+        scheme.getEdges().add(savedEdge);
+        return schemeRepository.save(scheme);
+    }
+
 
     @Transactional
     public Scheme edit(Long id, Scheme updatedScheme) {

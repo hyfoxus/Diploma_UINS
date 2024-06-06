@@ -81,4 +81,10 @@ public class GraphEditorController {
       return ResponseEntity.status(500).build();
     }
   }
+
+  @PostMapping("/scheme")
+  public ResponseEntity<Long> createScheme(@RequestBody GraphDTO scheme) {
+
+    return ResponseEntity.ok(5L);
+  }
 }

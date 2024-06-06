@@ -10,6 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GraphDTO {
+    private Long level;
     private List<NodeDTO> nodes;
     private List<EdgeDTO> edges;
+    private String description;
 }
