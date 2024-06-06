@@ -25,11 +25,10 @@ public class SchemeController {
     public ResponseEntity<Scheme> getSchemeById(@PathVariable Long id) {
         return ResponseEntity.ok(schemeService.getById(id));
     }
-
+ 
     @PostMapping("/")
-    public ResponseEntity<Scheme> createScheme(@RequestParam List<Long> vertexIds, @RequestParam List<Long> edgeIds, @RequestParam long level, @RequestParam String description) {
-        Scheme scheme = schemeService.create(vertexIds, edgeIds, level, description);
-        return ResponseEntity.ok(scheme);
+    public ResponseEntity<Scheme> createScheme(@RequestBody Scheme scheme) {
+        return ResponseEntity.ok(schemeService.create(scheme));
     }
 
     @PostMapping("/{schemeId}/createVertex")
@@ -44,4 +43,3 @@ public class SchemeController {
         return ResponseEntity.ok(updatedScheme);
     }
 }
-

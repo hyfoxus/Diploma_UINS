@@ -33,6 +33,9 @@ public class SchemeService {
 
 
 
+    public Scheme create(Scheme scheme) {
+        return schemeRepository.save(scheme);
+    }
     @Transactional
     public Scheme create(List<Long> vertexIds, List<Long> edgeIds, long level, String description) {
         List<Vertex> vertexes = vertexRepository.findAllById(vertexIds);
@@ -111,5 +114,4 @@ public class SchemeService {
         }
     }
 }
-
 

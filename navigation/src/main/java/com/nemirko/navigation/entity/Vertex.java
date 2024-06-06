@@ -16,7 +16,7 @@ import java.util.Map;
 public class Vertex {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @ElementCollection
     private Map<Long, Integer> angles = new HashMap<>(); //key is an id of the edge adjustment to this vertex and value is to where this edge goes

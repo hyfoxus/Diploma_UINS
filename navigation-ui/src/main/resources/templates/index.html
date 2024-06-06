@@ -271,13 +271,13 @@
         const availability = confirm("Is the vertex available?");
 
         if (schemeId && name && type) {
-            fetch(`/api/scheme/${schemeId}/createVertex`, {
+            fetch(`/api/graph/vertex`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    name: name,
+                    label: name,
                     description: description,
                     type: type,
                     availability: availability
