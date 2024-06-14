@@ -14,6 +14,9 @@
         <!-- Options will be populated dynamically -->
     </select>
     <button onclick="saveGraph()">Save Graph</button>
+    <button onclick="createScheme()">Create New Scheme</button> <!-- New button for creating schemes -->
+    <button onclick="addVertex()">Add Vertex</button>
+    <button onclick="addEdge()">Add Edge</button>
 </div>
 <div class="container">
     <div id="mynetwork"></div>
@@ -223,6 +226,108 @@
             body: JSON.stringify(updatedGraph)
         });
     }
+
+    function createScheme() {
+        const schemeDescription = prompt("Enter a description for the new scheme:");
+        const schemeLevel = prompt("Enter the level for the new scheme:");
+
+        if (schemeDescription && schemeLevel) {
+            fetch('/api/graph/scheme', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    description: schemeDescription,
+                    nodes: [], // Starting with an empty list of vertices
+                    edges: [], // Starting with an empty list of edges
+                    level: schemeLevel
+                })
+            })
+                .then(response => response.json())
+                .then(newScheme => {
+                    // Add new scheme to the dropdown
+                    const schemeSelect = document.getElementById('schemeSelect');
+                    const option = document.createElement('option');
+                    option.value = newScheme.id;
+                    option.textContent = `Scheme id ${newScheme.id}`;
+                    schemeSelect.appendChild(option);
+
+                    // Select the new scheme
+                    schemeSelect.value = newScheme.id;
+                    loadScheme();
+                })
+                .catch(error => {
+                    console.error('Error creating new scheme:', error);
+                });
+        }
+    }
+
+    function addVertex() {
+        const schemeId = document.getElementById('schemeSelect').value;
+        const name = prompt("Enter the name for the new vertex:");
+        const description = prompt("Enter the description for the new vertex:");
+        const type = prompt("Enter the type for the new vertex (Cabinet, Port, Crossroad):");
+        const availability = confirm("Is the vertex available?");
+
+        if (schemeId && name && type) {
+            fetch(`/api/graph/vertex`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    label: name,
+                    description: description,
+                    type: type,
+                    availability: availability
+                })
+            })
+                .then(response => response.json())
+                .then(updatedScheme => {
+                    // Update the graph with the new vertex
+                    loadScheme();
+                })
+                .catch(error => {
+                    console.error('Error creating and adding vertex:', error);
+                });
+        }
+    }
+
+    function addEdge() {
+        const schemeId = document.getElementById('schemeSelect').value;
+        const distance = prompt("Enter the distance for the new edge:");
+        const vertexFromId = prompt("Enter the ID of the starting vertex:");
+        const vertexToId = prompt("Enter the ID of the ending vertex:");
+        const direction = prompt("Enter the direction for the new edge:");
+        const type = prompt("Enter the type for the new edge (e.g., DIRECTED, UNDIRECTED):");
+
+        if (schemeId && distance && vertexFromId && vertexToId && direction && type) {
+            fetch(`/api/scheme/${schemeId}/createEdge`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    distance: distance,
+                    vertexFromId: vertexFromId,
+                    vertexToId: vertexToId,
+                    direction: direction,
+                    type: type
+                })
+            })
+                .then(response => response.json())
+                .then(updatedScheme => {
+                    // Update the graph with the new edge
+                    loadScheme();
+                })
+                .catch(error => {
+                    console.error('Error creating and adding edge:', error);
+                });
+        }
+    }
+
+
 
 </script>
 </body>

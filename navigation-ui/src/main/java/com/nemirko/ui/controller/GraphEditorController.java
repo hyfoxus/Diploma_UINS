@@ -1,6 +1,8 @@
 package com.nemirko.ui.controller;
 import com.nemirko.navigation.entity.Scheme;
+import com.nemirko.navigation.entity.Vertex;
 import com.nemirko.ui.dto.GraphDTO;
+import com.nemirko.ui.dto.NodeDTO;
 import com.nemirko.ui.service.SchemeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +74,39 @@ public class GraphEditorController {
     try {
       String url = navigationServiceUrl + "/api/scheme/";
       ResponseEntity<Scheme> response = restTemplate.postForEntity(url, scheme, Scheme.class);
+      return response;
+    } catch (HttpClientErrorException | HttpServerErrorException e) {
+      logger.error("Error occurred while processing the request: {}", e.getMessage());
+      return ResponseEntity.status(e.getStatusCode()).build();
+    } catch (Exception e) {
+      logger.error("Unexpected error occurred: {}", e.getMessage());
+      return ResponseEntity.status(500).build();
+    }
+  }
+
+  @PostMapping("/scheme")
+  public ResponseEntity<Scheme> createScheme(@RequestBody GraphDTO graphDTO) {
+
+    try {
+      String url = navigationServiceUrl + "/api/scheme/";
+      ResponseEntity<Scheme> response =
+              restTemplate.postForEntity(url, schemeService.transformToScheme(graphDTO), Scheme.class);
+      return response;
+    } catch (HttpClientErrorException | HttpServerErrorException e) {
+      logger.error("Error occurred while processing the request: {}", e.getMessage());
+      return ResponseEntity.status(e.getStatusCode()).build();
+    } catch (Exception e) {
+      logger.error("Unexpected error occurred: {}", e.getMessage());
+      return ResponseEntity.status(500).build();
+    }
+  }
+
+  @PostMapping("/vertex")
+  public ResponseEntity<Vertex> createVertex(@RequestBody NodeDTO nodeDTO) {
+    try {
+      String url = navigationServiceUrl + "/api/vertex";
+      ResponseEntity<Vertex> response =
+              restTemplate.postForEntity(url, schemeService.transformToVertex(nodeDTO), Vertex.class);
       return response;
     } catch (HttpClientErrorException | HttpServerErrorException e) {
       logger.error("Error occurred while processing the request: {}", e.getMessage());
