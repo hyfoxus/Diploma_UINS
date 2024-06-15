@@ -1,5 +1,6 @@
 package com.nemirko.ui.service;
 
+import com.nemirko.navigation.entity.Edge;
 import com.nemirko.navigation.entity.Scheme;
 import com.nemirko.navigation.entity.Vertex;
 import com.nemirko.ui.dto.EdgeDTO;
@@ -58,6 +59,25 @@ public class SchemeService {
         vertex.setType(nodeDTO.getType());
         vertex.setAvailability(nodeDTO.getAvailability());
         vertex.setDescription(nodeDTO.getDescription());
+        return vertex;
+    }
+    public Edge transformToEdge(EdgeDTO edgeDTO) {
+        Edge edge = new Edge();
+        edge.setDistance(edgeDTO.getLength());
+        edge.setDirection(edgeDTO.getDirection());
+        // Assuming you have a method to get Vertex by id
+        Vertex vertexFrom = getVertexById(edgeDTO.getFrom());
+        Vertex vertexTo = getVertexById(edgeDTO.getTo());
+        edge.setVertexFrom(vertexFrom);
+        edge.setVertexTo(vertexTo);
+        return edge;
+    }
+
+    // Mock method to get Vertex by ID, replace this with actual implementation
+    private Vertex getVertexById(Long id) {
+        // Fetch the vertex from the database or any other source
+        Vertex vertex = new Vertex();
+        vertex.setId(id);
         return vertex;
     }
 }
