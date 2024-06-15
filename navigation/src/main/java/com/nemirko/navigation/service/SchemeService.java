@@ -31,6 +31,7 @@ public class SchemeService {
         return schemeRepository.findById(id).orElse(null);
     }
 
+    public List<Scheme> getSchemesByVertexId(Vertex vertex){ return schemeRepository.findAllByVertex(vertex);}
 
 
     public Scheme create(Scheme scheme) {
@@ -87,6 +88,8 @@ public class SchemeService {
         scheme.getEdges().add(savedEdge);
         return schemeRepository.save(scheme);
     }
+
+
 
 
     @Transactional

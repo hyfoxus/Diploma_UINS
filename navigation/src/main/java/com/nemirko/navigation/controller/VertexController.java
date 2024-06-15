@@ -1,10 +1,14 @@
+
 package com.nemirko.navigation.controller;
 import com.nemirko.navigation.entity.Vertex;
+import com.nemirko.navigation.service.Pair;
 import com.nemirko.navigation.service.VertexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/vertex")
@@ -37,6 +41,22 @@ public class VertexController {
         return service.save(vertex);
     }
 
-    // Other CRUD endpoints can be defined here...
-}
+    @GetMapping("/filter")
+    public List<Vertex> getVerticesByComplexCondition(
+            @RequestParam Map<String, String> params,
+            @RequestParam(required = false) List<String> sortFields,
+            @RequestParam(required = false) List<String> sortDirections) {
 
+        Map<String, Pair<String, String>> parsedParams = new HashMap<>();
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            String[] valueAndOperation = entry.getValue().split(",");
+            if (valueAndOperation.length == 2) {
+                parsedParams.put(entry.getKey(), new Pair<>(valueAndOperation[0], valueAndOperation[1]));
+            } else if (valueAndOperation.length == 1) {
+                parsedParams.put(entry.getKey(), new Pair<>(valueAndOperation[0], ""));
+            }
+        }
+
+        return service.findByComplexCondition(parsedParams, sortFields, sortDirections);
+    }
+}

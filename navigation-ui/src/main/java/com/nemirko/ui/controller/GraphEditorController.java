@@ -1,6 +1,8 @@
 package com.nemirko.ui.controller;
+import com.nemirko.navigation.entity.Edge;
 import com.nemirko.navigation.entity.Scheme;
 import com.nemirko.navigation.entity.Vertex;
+import com.nemirko.ui.dto.EdgeDTO;
 import com.nemirko.ui.dto.GraphDTO;
 import com.nemirko.ui.dto.NodeDTO;
 import com.nemirko.ui.service.SchemeService;
@@ -107,6 +109,22 @@ public class GraphEditorController {
       String url = navigationServiceUrl + "/api/vertex";
       ResponseEntity<Vertex> response =
               restTemplate.postForEntity(url, schemeService.transformToVertex(nodeDTO), Vertex.class);
+      return response;
+    } catch (HttpClientErrorException | HttpServerErrorException e) {
+      logger.error("Error occurred while processing the request: {}", e.getMessage());
+      return ResponseEntity.status(e.getStatusCode()).build();
+    } catch (Exception e) {
+      logger.error("Unexpected error occurred: {}", e.getMessage());
+      return ResponseEntity.status(500).build();
+    }
+  }
+
+  @PostMapping("/edge")
+  public ResponseEntity<Edge> createEdge(@RequestBody EdgeDTO edgeDTO) {
+    try {
+      String url = navigationServiceUrl + "/api/vertex";
+      ResponseEntity<Edge> response =
+              restTemplate.postForEntity(url, schemeService.transformToEdge(edgeDTO), Edge.class);
       return response;
     } catch (HttpClientErrorException | HttpServerErrorException e) {
       logger.error("Error occurred while processing the request: {}", e.getMessage());

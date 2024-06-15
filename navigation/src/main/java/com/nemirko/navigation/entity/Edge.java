@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Edge {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private long id;
 
     private int distance; // No special annotations needed for basic fields.

@@ -18,9 +18,6 @@ public class DijkstraPathfindingServiceImpl implements NavigationService {
     private VertexRepository vertexRepository;
 
     @Autowired
-    private EdgeRepository edgeRepository;
-
-    @Autowired
     private SchemeRepository schemeRepository;
 
     @Override
