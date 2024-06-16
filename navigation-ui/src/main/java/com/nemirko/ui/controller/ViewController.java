@@ -1,3 +1,4 @@
+
 package com.nemirko.ui.controller;
 
 import org.springframework.stereotype.Controller;
@@ -9,5 +10,10 @@ public class ViewController {
     @GetMapping("/")
     public String index() {
         return "index";
+    }
+
+    @GetMapping("/search")
+    public String sSearch() {
+        return "search";
     }
 }

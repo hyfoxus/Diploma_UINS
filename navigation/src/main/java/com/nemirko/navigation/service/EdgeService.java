@@ -69,4 +69,8 @@ public class EdgeService {
         edgeRepository.deleteById(id);
 
     }
+
+    public List<Edge> getAllByIds(List<Long> ids) {
+        return edgeRepository.findAllByIdIn(ids);
+    }
 }

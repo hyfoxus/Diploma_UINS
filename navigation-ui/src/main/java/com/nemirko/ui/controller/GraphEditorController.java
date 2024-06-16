@@ -1,4 +1,5 @@
 package com.nemirko.ui.controller;
+
 import com.nemirko.navigation.entity.Edge;
 import com.nemirko.navigation.entity.Scheme;
 import com.nemirko.navigation.entity.Vertex;
@@ -28,14 +29,16 @@ public class GraphEditorController {
 
   private final RestTemplate restTemplate;
   private final SchemeService schemeService;
-
-  @Value("${navigation.service.url}")
-  private String navigationServiceUrl;
+  private final String navigationServiceUrl;
 
   @Autowired
-  public GraphEditorController(RestTemplate restTemplate, SchemeService schemeService) {
+  public GraphEditorController(
+          RestTemplate restTemplate,
+          SchemeService schemeService,
+          @Value("${navigation.service.url}") String navigationServiceUrl) {
     this.restTemplate = restTemplate;
     this.schemeService = schemeService;
+    this.navigationServiceUrl = navigationServiceUrl;
   }
 
   @GetMapping("/{id}")

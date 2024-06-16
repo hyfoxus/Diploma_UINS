@@ -1,10 +1,11 @@
-package com.nemirko.navigation.service;
-
+package com.nemirko.ui.service;
 import com.nemirko.navigation.entity.EdgeType;
 import com.nemirko.navigation.entity.Vertex;
 import com.nemirko.navigation.entity.Edge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -12,10 +13,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class TranslatorService {
+public class TranslationService {
 
     @Autowired
-    private EdgeService edgeService;
+    private RestTemplate restTemplate;
+
+    private static final String EDGE_CONTROLLER_URL = "http://localhost:8080/api/edge/listed?ids=";
 
     public List<String> translateRoute(List<Vertex> route) {
 
@@ -33,7 +36,8 @@ public class TranslatorService {
                 .collect(Collectors.toList());
 
         // Получаем все необходимые Edge за один вызов
-        List<Edge> edges = edgeService.getAllByIds(edgeIds);
+        List<Edge> edges = getAllEdgesByIds(edgeIds);
+
 
         Vertex current = route.get(0);
         Vertex next = route.get(1);
@@ -81,6 +85,15 @@ public class TranslatorService {
         }
 
         return instructions;
+    }
+
+
+    private List<Edge> getAllEdgesByIds(List<Long> ids) {
+        String url = EDGE_CONTROLLER_URL + ids.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
+        ResponseEntity<List<Edge>> response = restTemplate.getForEntity(url, (Class<List<Edge>>) (Object) List.class);
+        return response.getBody();
     }
 
     private Edge findEdgeBetweenVertices(Vertex current, Vertex next, List<Edge> edges) {

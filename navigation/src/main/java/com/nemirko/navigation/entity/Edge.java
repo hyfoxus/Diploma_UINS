@@ -14,7 +14,7 @@ import java.util.List;
 public class Edge {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private int distance; // No special annotations needed for basic fields.
 

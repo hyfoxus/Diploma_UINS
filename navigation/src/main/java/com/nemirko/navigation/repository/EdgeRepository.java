@@ -13,4 +13,6 @@ public interface EdgeRepository extends JpaRepository<Edge, Long> {
     Edge findByVertexFromAndVertexTo(Vertex vertexFrom, Vertex vertexTo);
     List<Edge> findAllByVertexFrom(Vertex vertexFrom);
     List<Edge> findAllByVertexTo(Vertex vertexTo);
+
+    List<Edge> findAllByIdIn(List<Long> ids);
 }

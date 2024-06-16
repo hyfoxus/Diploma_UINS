@@ -43,4 +43,17 @@ public class EdgeController {
     public void delete(@PathVariable Long id) {
         edgeService.delete(id);
     }
+
+
+    @GetMapping("/listed")
+    public ResponseEntity<List<Edge>> getAllEdgesByIds(@RequestParam List<Long> ids) {
+        try {
+            List<Edge> edges = edgeService.getAllByIds(ids);
+            return ResponseEntity.ok(edges);
+
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }
