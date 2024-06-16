@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,5 +133,21 @@
             toDropdown.style.display = 'none';
         }
     });
+
+    function getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        const from = params.get('from');
+        const to = params.get('to');
+        if (from) {
+            document.getElementById('fromInput').value = from;
+            searchVertices('from');
+        }
+        if (to) {
+            document.getElementById('toInput').value = to;
+            searchVertices('to');
+        }
+    }
+
+    window.onload = getQueryParams;
 </script>
 </html>
