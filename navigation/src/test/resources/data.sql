@@ -1,135 +1,78 @@
-CREATE TABLE EDGE (
-                      DIRECTION INTEGER NOT NULL,
-                      DISTANCE INTEGER NOT NULL,
-                      TYPE SMALLINT,
-                      ID BIGSERIAL PRIMARY KEY,
-                      VERTEX1_ID BIGINT,
-                      VERTEX2_ID BIGINT
-);
-
-CREATE TABLE SCHEME (
-                        ID BIGSERIAL PRIMARY KEY,
-                        LEVEL BIGINT,
-                        DESCRIPTION VARCHAR(255)
-);
-
-CREATE TABLE SCHEME_EDGES (
-                              EDGE_ID BIGINT NOT NULL,
-                              SCHEME_ID BIGINT NOT NULL
-);
-
-CREATE TABLE SCHEME_SUB_SCHEME_IDS (
-                                       SCHEME_ID BIGINT NOT NULL,
-                                       SUB_SCHEME_ID BIGINT
-);
-
-CREATE TABLE SCHEME_VERTEXES (
-                                 SCHEME_ID BIGINT NOT NULL,
-                                 VERTEX_ID BIGINT NOT NULL
-);
-
-CREATE TABLE VERTEX (
-                        AVAILABILITY BOOLEAN,
-                        TYPE SMALLINT,
-                        ID BIGSERIAL PRIMARY KEY,
-                        DESCRIPTION VARCHAR(255),
-                        NAME VARCHAR(255)
-);
-
-CREATE TABLE VERTEX_ANGLES (
-                               ANGLES INTEGER,
-                               ANGLES_KEY BIGINT NOT NULL,
-                               VERTEX_ID BIGINT NOT NULL,
-                               PRIMARY KEY (ANGLES_KEY, VERTEX_ID)
-);
+INSERT INTO "PUBLIC"."VERTEX" (AVAILABILITY, TYPE, DESCRIPTION, NAME) VALUES
+                                  (TRUE, 2, 'Main Entrance', 'Enter'),
+                                  (TRUE, 1, 'Crossroad near entrance, toilet and living Room', 'Crossroad'),
+                                  (TRUE, 0, 'Toilet first floor', 'Toilet'),
+                                  (TRUE, 0, 'Living Room first floor', 'Living Room'),
+                                  (TRUE, 1, 'Crossroad near ladder', 'Crossroad near ladder'),
+                                  (TRUE, 2, 'Ladder to second floor', 'Ladder'),
+                                  (TRUE, 1, 'Crossroad to kitchen and library', 'Crossroad'),
+                                  (TRUE, 0, 'Library first floor', 'Library'),
+                                  (TRUE, 0, 'Kitchen first floor', 'Kitchen'),
+                                  (TRUE, 2, 'Ladder from First floor', 'Ladder from first floor'),
+                                  (TRUE, 1, 'Crossroad second floor near ladder', 'Crossroad second floor'),
+                                  (TRUE, 2, 'Ladder to third floor', 'Ladder to third flood'),
+                                  (TRUE, 1, 'Crossroad second floor', 'Crossroad between toilet and bath'),
+                                  (TRUE, 0, 'Toilet second floor', 'Toilet'),
+                                  (TRUE, 0, 'Bath Second floor', 'Bath'),
+                                  (TRUE, 1, 'Crossroad to Circle', 'Crossroad Enter to circle'),
+                                  (TRUE, 1, 'Circle', 'Circle 17'),
+                                  (TRUE, 0, 'Circle room', 'Circle Room 18'),
+                                  (TRUE, 1, 'Circle', 'Circle 19'),
+                                  (TRUE, 0, 'Circle room', 'Circle Room 20'),
+                                  (TRUE, 1, 'Circle', 'Circle 21'),
+                                  (TRUE, 0, 'Circle room', 'Circle Room 22'),
+                                  (TRUE, 1, 'Circle', 'Circle 23'),
+                                  (TRUE, 0, 'Circle room', 'Circle Room 24'),
+                                  (TRUE, 1, 'Circle', 'Circle 25'),
+                                  (TRUE, 0, 'Circle room', 'Circle Room 26'),
+                                  (TRUE, 1, 'Circle', 'Circle 27'),
+                                  (TRUE, 0, 'Circle room', 'Circle Room 28'),
+                                  (TRUE, 2, 'Ladder from Second Floor', 'Ladder from Second Floor'),
+                                  (TRUE, 0, 'Office Third Floor', 'Office 30'),
+                                  (TRUE, 1, 'Crossroad 31 Third Floor', 'Crossroad 31 Third Floor'),
+                                  (TRUE, 0, 'Storage Third Floor', 'Storage 32'),
+                                  (TRUE, 0, 'Storage Third Floor', 'Storage 33'),
+                                  (TRUE, 1, 'Crossroad 34 Third Floor', 'Crossroad 34 Third Floor'),
+                                  (TRUE, 0, 'Toilet Third Floor', 'Storage');
 
 
-ALTER TABLE EDGE ADD CONSTRAINT CHECK_TYPE_EDGE CHECK (TYPE BETWEEN 0 AND 1);
-ALTER TABLE VERTEX ADD CONSTRAINT CHECK_TYPE_VERTEX CHECK (TYPE BETWEEN 0 AND 2);
-
-ALTER TABLE EDGE ADD CONSTRAINT FK_EDGE_VERTEX1 FOREIGN KEY (VERTEX1_ID) REFERENCES VERTEX (ID);
-ALTER TABLE SCHEME_VERTEXES ADD CONSTRAINT FK_SCHEME_VERTEXES_SCHEME FOREIGN KEY (SCHEME_ID) REFERENCES SCHEME (ID);
-ALTER TABLE SCHEME_SUB_SCHEME_IDS ADD CONSTRAINT FK_SCHEME_SUB_SCHEME_IDS_SCHEME FOREIGN KEY (SCHEME_ID) REFERENCES SCHEME (ID);
-ALTER TABLE SCHEME_EDGES ADD CONSTRAINT FK_SCHEME_EDGES_SCHEME FOREIGN KEY (SCHEME_ID) REFERENCES SCHEME (ID);
-ALTER TABLE SCHEME_EDGES ADD CONSTRAINT FK_SCHEME_EDGES_EDGE FOREIGN KEY (EDGE_ID) REFERENCES EDGE (ID);
-ALTER TABLE VERTEX_ANGLES ADD CONSTRAINT FK_VERTEX_ANGLES_VERTEX FOREIGN KEY (VERTEX_ID) REFERENCES VERTEX (ID);
-ALTER TABLE EDGE ADD CONSTRAINT FK_EDGE_VERTEX2 FOREIGN KEY (VERTEX2_ID) REFERENCES VERTEX (ID);
-
-INSERT INTO VERTEX (AVAILABILITY, TYPE, DESCRIPTION, NAME) VALUES
-                                                                          (TRUE, 2, 'Main Entrance', 'Enter'),
-                                                                          (TRUE, 1, 'Crossroad near entrance, toilet and living Room', 'Crossroad'),
-                                                                          (TRUE, 0, 'Toilet first floor', 'Toilet'),
-                                                                          (TRUE, 0, 'Living Room first floor', 'Living Room'),
-                                                                          (TRUE, 1, 'Crossroad near ladder', 'Crossroad near ladder'),
-                                                                          (TRUE, 2, 'Ladder to second floor', 'Ladder'),
-                                                                          (TRUE, 1, 'Crossroad to kitchen and library', 'Crossroad'),
-                                                                          (TRUE, 0, 'Library first floor', 'Library'),
-                                                                          (TRUE, 0, 'Kitchen first floor', 'Kitchen'),
-                                                                          (TRUE, 2, 'Ladder from First floor', 'Ladder from first floor'),
-                                                                          (TRUE, 1, 'Crossroad second floor near ladder', 'Crossroad second floor'),
-                                                                          (TRUE, 2, 'Ladder to third floor', 'Ladder to third flood'),
-                                                                          (TRUE, 1, 'Crossroad second floor', 'Crossroad between toilet and bath'),
-                                                                          (TRUE, 0, 'Toilet second floor', 'Toilet'),
-                                                                          (TRUE, 0, 'Bath Second floor', 'Bath'),
-                                                                          (TRUE, 1, 'Crossroad to Circle', 'Crossroad Enter to circle'),
-                                                                          (TRUE, 1, 'Circle', 'Circle 17'),
-                                                                          (TRUE, 0, 'Circle room', 'Circle Room 18'),
-                                                                          (TRUE, 1, 'Circle', 'Circle 19'),
-                                                                          (TRUE, 0, 'Circle room', 'Circle Room 20'),
-                                                                          (TRUE, 1, 'Circle', 'Circle 21'),
-                                                                          (TRUE, 0, 'Circle room', 'Circle Room 22'),
-                                                                          (TRUE, 1, 'Circle', 'Circle 23'),
-                                                                          (TRUE, 0, 'Circle room', 'Circle Room 24'),
-                                                                          (TRUE, 1, 'Circle', 'Circle 25'),
-                                                                          (TRUE, 0, 'Circle room', 'Circle Room 26'),
-                                                                          (TRUE, 1, 'Circle', 'Circle 27'),
-                                                                          (TRUE, 0, 'Circle room', 'Circle Room 28'),
-                                                                          (TRUE, 2, 'Ladder from Second Floor', 'Ladder from Second Floor'),
-                                                                          (TRUE, 0, 'Office Third Floor', 'Office 30'),
-                                                                          (TRUE, 1, 'Crossroad 31 Third Floor', 'Crossroad 31 Third Floor'),
-                                                                          (TRUE, 0, 'Storage Third Floor', 'Storage 32'),
-                                                                          (TRUE, 0, 'Storage Third Floor', 'Storage 33'),
-                                                                          (TRUE, 1, 'Crossroad 34 Third Floor', 'Crossroad 34 Third Floor'),
-                                                                          (TRUE, 0, 'Toilet Third Floor', 'Storage');
-
-
-INSERT INTO EDGE (DIRECTION, DISTANCE, TYPE, VERTEX1_ID , VERTEX2_ID) VALUES
-                                                                                     (0, 10, 1, 1, 2),
-                                                                                     (90, 5, 1, 2, 3),
-                                                                                     (270, 5, 1, 2, 4),
-                                                                                     (0, 20, 1, 4, 5),
-                                                                                     (270, 5, 1, 5, 6),
-                                                                                     (0, 10, 1, 6, 7),
-                                                                                     (90, 5, 1, 7, 8),
-                                                                                     (270, 5, 1, 8, 9),
-                                                                                     (90, 10, 0, 9, 10),
-                                                                                     (90, 5, 1, 10, 11),
-                                                                                     (0, 10, 1, 11, 12),
-                                                                                     (0, 10, 1, 12, 13),
-                                                                                     (90, 5, 1, 13, 14),
-                                                                                     (270, 5, 1, 14, 15),
-                                                                                     (180, 10, 1, 15, 16),
-                                                                                     (90, 10, 1, 16, 17),
-                                                                                     (45, 2, 1, 17, 18),
-                                                                                     (135, 10, 1, 18, 19),
-                                                                                     (90, 2, 1, 19, 20),
-                                                                                     (225, 10, 1, 20, 21),
-                                                                                     (135, 2, 1, 21, 22),
-                                                                                     (270, 20, 1, 22, 23),
-                                                                                     (225, 2, 1, 23, 24),
-                                                                                     (315, 10, 1, 24, 25),
-                                                                                     (270, 2, 1, 25, 26),
-                                                                                     (45, 10, 1, 26, 27),
-                                                                                     (315, 2, 1, 27, 28),
-                                                                                     (90, 10, 1, 28, 16),
-                                                                                     (90, 10, 0, 29, 29),
-                                                                                     (180, 10, 1, 30, 30),
-                                                                                     (90, 10, 1, 31, 31),
-                                                                                     (180, 2, 1, 32, 32),
-                                                                                     (0, 2, 1, 33, 33),
-                                                                                     (0, 10, 1, 34, 34),
-                                                                                     (270, 2, 1, 35, 35);
-INSERT INTO VERTEX_ANGLES VALUES
+INSERT INTO "PUBLIC"."EDGE" (DIRECTION, DISTANCE, TYPE, VERTEX1_ID , VERTEX2_ID) VALUES
+                                         (0, 10, 1, 1, 2),
+                                         (90, 5, 1, 2, 3),
+                                         (270, 5, 1, 2, 4),
+                                         (0, 20, 1, 4, 5),
+                                         (270, 5, 1, 5, 6),
+                                         (0, 10, 1, 6, 7),
+                                         (90, 5, 1, 7, 8),
+                                         (270, 5, 1, 8, 9),
+                                         (90, 10, 0, 9, 10),
+                                         (90, 5, 1, 10, 11),
+                                         (0, 10, 1, 11, 12),
+                                         (0, 10, 1, 12, 13),
+                                         (90, 5, 1, 13, 14),
+                                         (270, 5, 1, 14, 15),
+                                         (180, 10, 1, 15, 16),
+                                         (90, 10, 1, 16, 17),
+                                         (45, 2, 1, 17, 18),
+                                         (135, 10, 1, 18, 19),
+                                         (90, 2, 1, 19, 20),
+                                         (225, 10, 1, 20, 21),
+                                         (135, 2, 1, 21, 22),
+                                         (270, 20, 1, 22, 23),
+                                         (225, 2, 1, 23, 24),
+                                         (315, 10, 1, 24, 25),
+                                         (270, 2, 1, 25, 26),
+                                         (45, 10, 1, 26, 27),
+                                         (315, 2, 1, 27, 28),
+                                         (90, 10, 1, 28, 16),
+                                         (90, 10, 0, 29, 29),
+                                         (180, 10, 1, 30, 30),
+                                         (90, 10, 1, 31, 31),
+                                         (180, 2, 1, 32, 32),
+                                         (0, 2, 1, 33, 33),
+                                         (0, 10, 1, 34, 34),
+                                         (270, 2, 1, 35, 35);
+INSERT INTO "PUBLIC"."VERTEX_ANGLES" VALUES
                                          (0, 1, 1),
                                          (180, 1, 2),
                                          (90, 2, 2),
@@ -200,12 +143,12 @@ INSERT INTO VERTEX_ANGLES VALUES
                                          (180, 34, 34),
                                          (270, 35, 34),
                                          (90, 35, 35);
-INSERT INTO SCHEME (LEVEL) VALUES
+INSERT INTO "PUBLIC"."SCHEME" (level) VALUES
                                           (1),
                                           (1),
                                           (1),
                                           (2);
-INSERT INTO SCHEME_EDGES VALUES
+INSERT INTO "PUBLIC"."SCHEME_EDGES" VALUES
                                         (1, 1),
                                         (2, 1),
                                         (3, 1),
@@ -274,7 +217,7 @@ INSERT INTO SCHEME_EDGES VALUES
                                         (33, 4),
                                         (34, 4),
                                         (35, 4);
-INSERT INTO SCHEME_VERTEXES VALUES
+INSERT INTO "PUBLIC"."SCHEME_VERTEXES" VALUES
                                            (1, 1),
                                            (1, 2),
                                            (1, 3),
@@ -345,7 +288,7 @@ INSERT INTO SCHEME_VERTEXES VALUES
                                            (4, 33),
                                            (4, 34),
                                            (4, 35);
-INSERT INTO SCHEME_SUB_SCHEME_IDS VALUES
+INSERT INTO "PUBLIC"."SCHEME_SUB_SCHEME_IDS" VALUES
                                                  (4, 1),
                                                  (4, 2),
                                                  (4, 3);
