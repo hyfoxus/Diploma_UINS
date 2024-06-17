@@ -32,12 +32,12 @@ public class SchemeController {
         return ResponseEntity.ok(schemeService.create(scheme));
     }
 
-    @PostMapping("/{schemeId}/createVertex")
+    @PostMapping("/{schemeId}/vertex")
     public ResponseEntity<Vertex> createAndAddVertexToScheme(@PathVariable Long schemeId, @RequestBody Vertex vertex) {
         return ResponseEntity.ok(schemeService.createAndAddVertexToScheme(schemeId, vertex));
     }
 
-    @PostMapping("/{schemeId}/createEdge")
+    @PostMapping("/{schemeId}/edge")
     public ResponseEntity<Edge> createAndAddEdgeToScheme(@PathVariable Long schemeId, @RequestParam int distance, @RequestParam long vertexFromId, @RequestParam long vertexToId, @RequestParam int direction, @RequestParam EdgeType type) {
         return ResponseEntity.ok(schemeService.createAndAddEdgeToScheme(schemeId, distance, vertexFromId, vertexToId, direction, type));
     }
