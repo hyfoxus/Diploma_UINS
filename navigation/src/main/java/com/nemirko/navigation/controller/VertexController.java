@@ -41,6 +41,7 @@ public class VertexController {
         return service.save(vertex);
     }
 
+
     @GetMapping("/filter")
     public List<Vertex> getVerticesByComplexCondition(
             @RequestParam Map<String, String> params,

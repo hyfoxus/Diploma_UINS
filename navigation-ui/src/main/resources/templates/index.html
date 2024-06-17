@@ -300,7 +300,7 @@
         const vertexFromId = prompt("Enter the ID of the starting vertex:");
         const vertexToId = prompt("Enter the ID of the ending vertex:");
         const direction = prompt("Enter the direction for the new edge:");
-        const type = prompt("Enter the type for the new edge (e.g., DIRECTED, UNDIRECTED):");
+        const type = prompt("Enter the type for the new edge (e.g., Vertical, Horizontal):");
 
         if (schemeId && distance && vertexFromId && vertexToId && direction && type) {
             fetch(`/api/scheme/${schemeId}/createEdge`, {

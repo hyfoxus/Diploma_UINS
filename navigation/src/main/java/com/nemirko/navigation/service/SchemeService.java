@@ -52,22 +52,16 @@ public class SchemeService {
     }
 
     @Transactional
-    public Scheme createAndAddVertexToScheme(Long schemeId, String name, String description, VertexType type, Boolean availability) {
+    public Vertex createAndAddVertexToScheme(Long schemeId, Vertex vertex) {
         Scheme scheme = schemeRepository.findById(schemeId).orElseThrow(() -> new RuntimeException("Scheme not found"));
-
-        Vertex vertex = new Vertex();
-        vertex.setName(name);
-        vertex.setDescription(description);
-        vertex.setType(type);
-        vertex.setAvailability(availability);
-        Vertex savedVertex = vertexRepository.save(vertex);
-
-        scheme.getVertexes().add(savedVertex);
-        return schemeRepository.save(scheme);
+        vertexRepository.save(vertex);
+        scheme.getVertexes().add(vertex);
+        schemeRepository.save(scheme);
+        return vertex;
     }
 
     @Transactional
-    public Scheme createAndAddEdgeToScheme(Long schemeId, int distance, long vertexFromId, long vertexToId, int direction, EdgeType type) {
+    public Edge createAndAddEdgeToScheme(Long schemeId, int distance, long vertexFromId, long vertexToId, int direction, EdgeType type) {
         Scheme scheme = schemeRepository.findById(schemeId).orElseThrow(() -> new RuntimeException("Scheme not found"));
         Vertex fromVertex = vertexRepository.findById(vertexFromId).orElseThrow(() -> new RuntimeException("From Vertex not found"));
         Vertex toVertex = vertexRepository.findById(vertexToId).orElseThrow(() -> new RuntimeException("To Vertex not found"));
@@ -86,10 +80,9 @@ public class SchemeService {
         vertexRepository.save(toVertex);
 
         scheme.getEdges().add(savedEdge);
-        return schemeRepository.save(scheme);
+        schemeRepository.save(scheme);
+        return savedEdge;
     }
-
-
 
 
     @Transactional

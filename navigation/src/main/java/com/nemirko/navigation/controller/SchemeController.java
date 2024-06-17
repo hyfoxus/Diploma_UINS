@@ -1,5 +1,6 @@
 package com.nemirko.navigation.controller;
 
+import com.nemirko.navigation.entity.Edge;
 import com.nemirko.navigation.entity.EdgeType;
 import com.nemirko.navigation.entity.Scheme;
 import com.nemirko.navigation.entity.Vertex;
@@ -32,14 +33,12 @@ public class SchemeController {
     }
 
     @PostMapping("/{schemeId}/createVertex")
-    public ResponseEntity<Scheme> createAndAddVertexToScheme(@PathVariable Long schemeId, @RequestBody Vertex vertex) {
-        Scheme updatedScheme = schemeService.createAndAddVertexToScheme(schemeId, vertex.getName(), vertex.getDescription(), vertex.getType(), vertex.getAvailability());
-        return ResponseEntity.ok(updatedScheme);
+    public ResponseEntity<Vertex> createAndAddVertexToScheme(@PathVariable Long schemeId, @RequestBody Vertex vertex) {
+        return ResponseEntity.ok(schemeService.createAndAddVertexToScheme(schemeId, vertex));
     }
 
     @PostMapping("/{schemeId}/createEdge")
-    public ResponseEntity<Scheme> createAndAddEdgeToScheme(@PathVariable Long schemeId, @RequestParam int distance, @RequestParam long vertexFromId, @RequestParam long vertexToId, @RequestParam int direction, @RequestParam EdgeType type) {
-        Scheme updatedScheme = schemeService.createAndAddEdgeToScheme(schemeId, distance, vertexFromId, vertexToId, direction, type);
-        return ResponseEntity.ok(updatedScheme);
+    public ResponseEntity<Edge> createAndAddEdgeToScheme(@PathVariable Long schemeId, @RequestParam int distance, @RequestParam long vertexFromId, @RequestParam long vertexToId, @RequestParam int direction, @RequestParam EdgeType type) {
+        return ResponseEntity.ok(schemeService.createAndAddEdgeToScheme(schemeId, distance, vertexFromId, vertexToId, direction, type));
     }
 }
