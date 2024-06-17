@@ -45,35 +45,21 @@ public class VertexService {
   }
 
   public Vertex edit(Long id, Vertex updatedVertex) {
-    // Fetch the vertex by its ID
-    Optional<Vertex> vertexOpt = vertexRepository.findById(id);
-
-    if (vertexOpt.isPresent()) {
-      Vertex vertex = vertexOpt.get();
-
-      if (updatedVertex.getName() != null && !updatedVertex.getName().isEmpty()) {
-        vertex.setName(updatedVertex.getName());
-      }
-
-      // Check if the updated availability field is not empty
-      if (updatedVertex.getAvailability() != vertex.getAvailability()) {
-        // Only update the availability if the updatedVertex's availability is not null
-        if (updatedVertex.getAvailability() != null) {
-          vertex.setAvailability(updatedVertex.getAvailability());
-        }
-      }
-
-      if (updatedVertex.getDescription() != null && !updatedVertex.getDescription().isEmpty()) {
-        vertex.setDescription(updatedVertex.getDescription());
-      }
-      // You can update other properties here
-
-      // Save the updated vertex
-      return vertexRepository.save(vertex);
-    } else {
-      // Handle the case where the vertex is not found
-      throw new RuntimeException("Vertex with id " + id + " not found.");
+    if (id == null || updatedVertex == null) {
+      throw new IllegalArgumentException("ID and updated vertex must not be null.");
     }
+
+    Vertex existingVertex = vertexRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Vertex with id " + id + " not found."));
+
+    // Update the fields of the existing vertex with values from updatedVertex
+    existingVertex.setName(updatedVertex.getName());
+    existingVertex.setDescription(updatedVertex.getDescription());
+    existingVertex.setType(updatedVertex.getType());
+    existingVertex.setAvailability(updatedVertex.getAvailability());
+
+    // Save the updated vertex
+    return vertexRepository.save(existingVertex);
   }
 
   public void delete(Long id) {

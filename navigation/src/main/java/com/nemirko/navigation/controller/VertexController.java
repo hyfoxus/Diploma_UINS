@@ -4,6 +4,7 @@ import com.nemirko.navigation.entity.Vertex;
 import com.nemirko.navigation.service.Pair;
 import com.nemirko.navigation.service.VertexService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -41,6 +42,15 @@ public class VertexController {
         return service.save(vertex);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Vertex> editVertex(@PathVariable Long id, @RequestBody Vertex updatedVertex) {
+        try {
+            Vertex editedVertex = service.edit(id, updatedVertex);
+            return ResponseEntity.ok(editedVertex);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
 
     @GetMapping("/filter")
     public List<Vertex> getVerticesByComplexCondition(
