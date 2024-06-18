@@ -6,12 +6,9 @@ import com.nemirko.navigation.entity.Vertex;
 import com.nemirko.ui.dto.EdgeDTO;
 import com.nemirko.ui.dto.GraphDTO;
 import com.nemirko.ui.dto.NodeDTO;
-import jakarta.persistence.Version;
-import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
 public class SchemeService {

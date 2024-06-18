@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Graph Editor</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" />
-    <link href="styles.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet"/>
+    <link href="styles.css" rel="stylesheet"/>
 </head>
 <body>
 <div id="toolbar">
@@ -23,6 +23,42 @@
     <div id="details"></div>
 </div>
 <button onclick="saveGraph()">Save Graph</button>
+
+<div id="modal">
+    <div id="modal-content">
+        <span id="close-modal" style="float:right;cursor:pointer;">×</span>
+        <h2>Add Node</h2>
+        <form id="node-form">
+            <label for="node-name">Name:</label>
+            <input type="text" id="node-name" name="name" required><br>
+            <label for="node-description">Description:</label>
+            <input type="text" id="node-description" name="description"><br>
+            <label for="node-type">Type:</label>
+            <select id="node-type" name="type" required>
+                <option value="Cabinet">Cabinet</option>
+                <option value="Port">Port</option>
+                <option value="Crossroad">Crossroad</option>
+            </select><br>
+            <label for="node-availability">Available:</label>
+            <input type="checkbox" id="node-availability" name="availability" checked><br>
+            <label for="connect-to-node">Connect to Node:</label>
+            <select id="connect-to-node" name="connectToNode">
+                <!-- Options will be populated dynamically -->
+            </select><br>
+            <input type="hidden" id="node-x" name="x">
+            <input type="hidden" id="node-y" name="y">
+            <button type="submit">Add Node</button>
+        </form>
+    </div>
+</div>
+<div id="context-menu" class="context-menu">
+    <ul>
+        <li id="edit-item">Edit</li>
+        <li id="delete-item">Delete</li>
+        <li id="add-node-item">Add Node</li>
+        <li id="add-edge-item">Add Edge</li>
+    </ul>
+</div>
 <script>
     var nodes = new vis.DataSet([]);
     var edges = new vis.DataSet([]);
@@ -33,6 +69,13 @@
         edges: edges
     };
     var options = {
+        interaction: {
+            dragNodes: true,
+            dragView: true,
+            zoomView: true,
+            multiselect: true,
+            navigationButtons: true
+        },
         edges: {
             smooth: false // Ensure edges are straight
         },
@@ -44,6 +87,7 @@
     var network = new vis.Network(container, data, options);
 
     const SCALE_FACTOR = 20;
+
     function loadScheme() {
         var scheme = document.getElementById('schemeSelect').value;
         fetch(`/api/graph/${scheme}`)
@@ -58,7 +102,7 @@
                 function dfs(nodeId, x, y) {
                     if (visitedNodes.has(nodeId)) return;
                     visitedNodes.add(nodeId);
-                    nodePositions[nodeId] = { x, y };
+                    nodePositions[nodeId] = {x, y};
 
                     graph.edges.forEach(edge => {
                         if (edge.from === nodeId && !visitedNodes.has(edge.to)) {
@@ -99,10 +143,11 @@
                 edges.add(graph.edges.map(edge => ({
                     ...edge
                 })));
+                positionIsolatedNodes();
             });
     }
 
-    window.onload = function() {
+    window.onload = function () {
         fetch('/api/graph/list')
             .then(response => response.json())
             .then(schemes => {
@@ -193,8 +238,8 @@
 
                 //Принудительно обновляем положение узлов
                 nodes.update([
-                    { id: fromNode.id, x: fromNode.x, y: fromNode.y },
-                    { id: toNode.id, x: toNode.x, y: toNode.y }
+                    {id: fromNode.id, x: fromNode.x, y: fromNode.y},
+                    {id: toNode.id, x: toNode.x, y: toNode.y}
                 ]);
             }
         });
@@ -271,26 +316,22 @@
         const availability = confirm("Is the vertex available?");
 
         if (schemeId && name && type) {
-            fetch(`/api/graph/vertex`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    label: name,
-                    description: description,
-                    type: type,
-                    availability: availability
-                })
-            })
-                .then(response => response.json())
-                .then(updatedScheme => {
-                    // Update the graph with the new vertex
-                    loadScheme();
-                })
-                .catch(error => {
-                    console.error('Error creating and adding vertex:', error);
-                });
+            const viewPosition = network.getViewPosition();
+            const newNode = {
+                id: nodes.length + 1, // Ensure unique ID
+                label: name,
+                description: description,
+                type: type,
+                availability: availability,
+                shape: 'dot',
+                size: 10,
+                title: `Node ${nodes.length + 1}`,
+                x: viewPosition.x,
+                y: viewPosition.y
+            };
+
+            // Assuming nodes is a global or higher scope variable representing the collection of nodes
+            nodes.add(newNode);
         }
     }
 
@@ -303,31 +344,357 @@
         const type = prompt("Enter the type for the new edge (e.g., Vertical, Horizontal):");
 
         if (schemeId && distance && vertexFromId && vertexToId && direction && type) {
-            fetch(`/api/scheme/${schemeId}/createEdge`, {
+            const newEdge = {
+                id: edges.length + 1, // Ensure unique ID
+                from: vertexFromId,
+                to: vertexToId,
+                length: parseFloat(distance),
+                direction: parseFloat(direction),
+                type: type
+            };
+
+            edges.add(newEdge);
+        }
+    }
+
+    /*// Обработчик события правого клика для добавления узла
+    container.addEventListener('contextmenu', function(event) {
+        if (event.ctrlKey) {
+            return; // Не открываем модальное окно, если Ctrl нажата
+        }
+        event.preventDefault();
+        const rect = container.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        // Преобразование координат экрана в координаты графа
+        const position = network.DOMtoCanvas({x: x, y: y});
+
+        // Открываем модальное окно и передаем координаты
+        openModal(position.x, position.y);
+    });
+
+    function openModal(x, y) {
+        const modal = document.getElementById('modal');
+        const form = document.getElementById('node-form');
+        document.getElementById('node-x').value = x;
+        document.getElementById('node-y').value = y;
+        modal.style.display = 'block';
+
+        form.onsubmit = function(event) {
+            event.preventDefault();
+            const name = document.getElementById('node-name').value;
+            const description = document.getElementById('node-description').value;
+            const type = document.getElementById('node-type').value;
+            const availability = document.getElementById('node-availability').checked;
+
+            const newNode = {
+                id: nodes.length + 1, // Ensure unique ID
+                label: name,
+                description: description,
+                type: type,
+                availability: availability,
+                shape: 'dot',
+                size: 10,
+                title: `Node ${nodes.length + 1}`,
+                x: parseFloat(document.getElementById('node-x').value),
+                y: parseFloat(document.getElementById('node-y').value)
+            };
+
+            nodes.add(newNode);
+            modal.style.display = 'none';
+        };
+    }
+
+    // Закрытие модального окна
+    document.getElementById('close-modal').onclick = function() {
+        document.getElementById('modal').style.display = 'none';
+    };
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('modal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    };*/
+
+    network.on("oncontext", function (params) {
+        params.event.preventDefault();
+
+        var contextMenu = document.getElementById('context-menu');
+        var editItem = document.getElementById('edit-item');
+        var deleteItem = document.getElementById('delete-item');
+        var addNodeItem = document.getElementById('add-node-item');
+        var addEdgeItem = document.getElementById('add-edge-item');
+
+        if (params.nodes.length > 0) {
+            var nodeId = params.nodes[0];
+            var node = nodes.get(nodeId);
+            console.log("Right-clicked on node:", node);
+
+            // Показать контекстное меню для узла
+            editItem.style.display = 'block';
+            deleteItem.style.display = 'block';
+            addNodeItem.style.display = 'none';
+            addEdgeItem.style.display = 'none';
+
+            editItem.innerText = 'Edit Node';
+            deleteItem.innerText = 'Delete Node';
+
+            editItem.onclick = function () {
+                editNode(nodeId);
+            };
+            deleteItem.onclick = function () {
+                deleteNode(nodeId);
+            };
+        } else if (params.edges.length > 0) {
+            var edgeId = params.edges[0];
+            var edge = edges.get(edgeId);
+            console.log("Right-clicked on edge:", edge);
+
+            // Показать контекстное меню для ребра
+            editItem.style.display = 'block';
+            deleteItem.style.display = 'block';
+            addNodeItem.style.display = 'none';
+            addEdgeItem.style.display = 'none';
+
+            editItem.innerText = 'Edit Edge';
+            deleteItem.innerText = 'Delete Edge';
+
+            editItem.onclick = function () {
+                editEdge(edgeId);
+            };
+            deleteItem.onclick = function () {
+                deleteEdge(edgeId);
+            };
+        } else {
+            console.log("Right-clicked on empty space");
+
+            // Показать контекстное меню для свободного места
+            editItem.style.display = 'none';
+            deleteItem.style.display = 'none';
+            addNodeItem.style.display = 'block';
+            addEdgeItem.style.display = 'block';
+
+            addNodeItem.innerText = 'Add Node';
+            addEdgeItem.innerText = 'Add Edge';
+            addNodeItem.onclick = function () {
+                addNode(params.event.pageX, params.event.pageY);
+            };
+            addEdgeItem.onclick = function () {
+                addEdge();
+            };
+        }
+
+        // Показать контекстное меню
+        contextMenu.style.display = 'block';
+        contextMenu.style.left = params.event.pageX + 'px';
+        contextMenu.style.top = params.event.pageY + 'px';
+    });
+
+    // Скрыть контекстное меню при клике в любом другом месте
+    window.addEventListener('click', function (event) {
+        var contextMenu = document.getElementById('context-menu');
+        if (!contextMenu.contains(event.target)) {
+            contextMenu.style.display = 'none';
+        }
+    });
+
+    function getNodesSortedByDistance(newNode) {
+        var nodeDistances = [];
+
+        nodes.forEach(function (node) {
+            var dx = node.x - newNode.x;
+            var dy = node.y - newNode.y;
+            var distance = Math.sqrt(dx * dx + dy * dy);
+            nodeDistances.push({node: node, distance: distance});
+
+        });
+
+        // Сортировка по возрастанию расстояния
+        nodeDistances.sort(function (a, b) {
+            return a.distance - b.distance;
+        });
+
+        // Возвращаем только отсортированные узлы
+        return nodeDistances.map(function (item) {
+            return item.node;
+        });
+    }
+
+    function addNode(pageX, pageY) {
+        // Закрыть контекстное меню
+        const contextMenu = document.getElementById('context-menu');
+        contextMenu.style.display = 'none';
+
+        const rect = container.getBoundingClientRect();
+        const x = pageX - rect.left;
+        const y = pageY - rect.top;
+
+        // Преобразование координат экрана в координаты графа
+        const position = network.DOMtoCanvas({x: x, y: y});
+
+        // Открываем модальное окно и передаем координаты
+        openModal(position.x, position.y);
+    }
+
+    function openModal(x, y) {
+        const modal = document.getElementById('modal');
+        const form = document.getElementById('node-form');
+        document.getElementById('node-x').value = x;
+        document.getElementById('node-y').value = y;
+
+        // Заполняем выпадающий список отсортированными узлами
+        const connectToNodeSelect = document.getElementById('connect-to-node');
+        connectToNodeSelect.innerHTML = ''; // Очистить текущие опции
+
+        const sortedNodes = getNodesSortedByDistance({x, y});
+        sortedNodes.forEach(node => {
+            const option = document.createElement('option');
+            option.value = node.id;
+            option.textContent = `Node ${node.id} (${node.label})`;
+            connectToNodeSelect.appendChild(option);
+        });
+
+        modal.style.display = 'block';
+
+        form.onsubmit = function (event) {
+            event.preventDefault();
+            const name = document.getElementById('node-name').value;
+            const description = document.getElementById('node-description').value;
+            const type = document.getElementById('node-type').value;
+            const availability = document.getElementById('node-availability').checked;
+            const connectToNodeId = document.getElementById('connect-to-node').value;
+            var schemeId = document.getElementById('schemeSelect').value;
+
+
+            fetch(`/api/scheme/${schemeId}/vertex`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    distance: distance,
-                    vertexFromId: vertexFromId,
-                    vertexToId: vertexToId,
-                    direction: direction,
-                    type: type
+                    name: name,
+                    description: description,
+                    type: type,
+                    availability: availability
                 })
             })
                 .then(response => response.json())
-                .then(updatedScheme => {
-                    // Update the graph with the new edge
-                    loadScheme();
+                .then(data => {
+                    const newNode = {
+                        id: data.id, // Используем ID, возвращенный сервером
+                        label: name,
+                        description: description,
+                        type: type,
+                        availability: availability,
+                        shape: 'dot',
+                        size: 10,
+                        title: `Node ${data.id}`,
+                        x: parseFloat(document.getElementById('node-x').value),
+                        y: parseFloat(document.getElementById('node-y').value)
+                    };
+
+                    nodes.add(newNode);
+                    if (connectToNodeId) {
+                        const newEdge = getEdge(nodes.get(connectToNodeId), newNode);
+                        fetch(`/api/scheme/${schemeId}/edge`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(newEdge)
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                newEdge.id = data.id; // Assuming the server returns the new edge ID
+                                edges.add(newEdge);
+                            })
+                            .catch(error => {
+                                console.error('Error adding edge:', error);
+                            });
+                        /*const newEdge = {
+                            id: edges.length + 1, // Ensure unique ID
+                            from: newNode.id,
+                            to: connectToNodeId,
+                            length: Math.sqrt(
+                                Math.pow(newNode.x - nodes.get(connectToNodeId).x, 2) +
+                                Math.pow(newNode.y - nodes.get(connectToNodeId).y, 2)
+                            ),
+                            type: 'Horizontal'
+                        };*/
+
+                        //edges.add(newEdge);
+                    }
+
+                    modal.style.display = 'none';
                 })
                 .catch(error => {
-                    console.error('Error creating and adding edge:', error);
+                    console.error('Error adding node:', error);
                 });
-        }
+        };
     }
 
+    // Закрытие модального окна
+    document.getElementById('close-modal').onclick = function () {
+        document.getElementById('modal').style.display = 'none';
+    };
 
+    window.onclick = function (event) {
+        const modal = document.getElementById('modal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    };
+
+    function positionIsolatedNodes() {
+        const isolatedNodes = [];
+        const connectedNodes = new Set();
+
+        // Собираем все узлы, которые имеют ребра
+        edges.forEach(edge => {
+            connectedNodes.add(edge.from);
+            connectedNodes.add(edge.to);
+        });
+
+        // Определяем изолированные узлы
+        nodes.forEach(node => {
+            if (!connectedNodes.has(node.id)) {
+                isolatedNodes.push(node);
+            }
+        });
+
+        // Располагаем изолированные узлы рядом с графом
+        let offsetX = 100; // Начальное смещение по X
+        const offsetY = 50; // Смещение по Y между изолированными узлами
+
+        isolatedNodes.forEach((node, index) => {
+            nodes.update({
+                id: node.id,
+                x: offsetX,
+                y: index * offsetY
+            });
+        });
+    }
+
+    function getEdge(node, newNode) {
+
+        var dx = node.x - newNode.x;
+        var dy = node.y - newNode.y;
+        const distance = Math.sqrt(dx * dx + dy * dy) / SCALE_FACTOR;
+        var angle = Math.atan2(dy, dx) * (180 / Math.PI);
+        if (angle < 0) {
+            angle += 360;
+        }
+
+        var direction = (angle + 90) % 360;
+        return {
+            from: node.id,
+            to: newNode.id, // This should be set to the target node's ID when known
+            length: distance,
+            direction: direction
+        };
+    }
 
 </script>
 </body>
