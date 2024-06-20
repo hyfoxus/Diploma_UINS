@@ -32,6 +32,12 @@ public class SchemeController {
         return ResponseEntity.ok(schemeService.create(scheme));
     }
 
+    @PostMapping("/manual")
+    public ResponseEntity<Scheme> createSchemeManually(@RequestParam List<Long> vertexIds, @RequestParam List<Long> edgeIds, @RequestParam long level, @RequestParam String description) {
+        Scheme scheme = schemeService.create(vertexIds, edgeIds, level, description);
+        return ResponseEntity.ok(scheme);
+    }
+
     @PostMapping("/{schemeId}/vertex")
     public ResponseEntity<Vertex> createAndAddVertexToScheme(@PathVariable Long schemeId, @RequestBody Vertex vertex) {
         return ResponseEntity.ok(schemeService.createAndAddVertexToScheme(schemeId, vertex));

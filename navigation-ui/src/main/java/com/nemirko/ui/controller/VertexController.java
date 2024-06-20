@@ -26,6 +26,16 @@ public class VertexController {
         this.navigationServiceUrl = navigationServiceUrl;
     }
 
+
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<Vertex> getById(@PathVariable Long id) {
+        String url = String.format("%s/api/vertex/%d",
+                navigationServiceUrl, id);
+        ResponseEntity<Vertex> response = restTemplate.getForEntity(url, Vertex.class);
+        return response;
+    }
+
+
     @GetMapping("/filter")
     public ResponseEntity<List<Vertex>> getVerticesByComplexCondition(
             @RequestParam Map<String, String> params,

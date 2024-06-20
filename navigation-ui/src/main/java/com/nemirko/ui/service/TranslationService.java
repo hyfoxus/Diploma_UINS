@@ -3,6 +3,9 @@ import com.nemirko.navigation.entity.EdgeType;
 import com.nemirko.navigation.entity.Vertex;
 import com.nemirko.navigation.entity.Edge;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +18,24 @@ import java.util.stream.Collectors;
 @Service
 public class TranslationService {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+
+    private final String navigationServiceUrl;
 
     private static final String EDGE_CONTROLLER_URL = "http://localhost:8080/api/edge/listed?ids=";
+
+    @Autowired
+    public TranslationService(RestTemplate restTemplate, @Value("${navigation.service.url}") String navigationServiceUrl) {
+        this.restTemplate = restTemplate;
+        this.navigationServiceUrl = navigationServiceUrl;
+    }
+
+    public List<List<String>> translateRoutes(List<List<Vertex>> routes) {
+        List<List<String>> translations = new ArrayList<>();
+        for (List<Vertex> route:routes) translations.add(translateRoute(route));
+        return translations;
+    }
+
 
     public List<String> translateRoute(List<Vertex> route) {
 
@@ -38,19 +55,20 @@ public class TranslationService {
         // Получаем все необходимые Edge за один вызов
         List<Edge> edges = getAllEdgesByIds(edgeIds);
 
-
         Vertex current = route.get(0);
         Vertex next = route.get(1);
 
         Edge firstEdge = findEdgeBetweenVertices(current, next, edges);
 
         if (firstEdge != null) {
-            currentDirection = updateDirection(current, next, currentDirection);
+            currentDirection = updateDirection(current, next, currentDirection, edges);
         }
 
         StringBuilder currentInstruction = new StringBuilder();
         int accumulatedDistance = 0;
         String lastDirection = "";
+
+        currentInstruction = new StringBuilder();
 
         for (int i = 0; i < route.size() - 1; i++) {
             current = route.get(i);
@@ -75,11 +93,18 @@ public class TranslationService {
                     currentInstruction.append(String.format("From %s, ", current.getName()));
                 }
 
-                currentDirection = updateDirection(current, next, currentDirection);
+                currentDirection = updateDirection(current, next, currentDirection, edges);
+            }
+
+            // Add the final accumulated instruction if any
+            if (i == route.size() - 2 && accumulatedDistance > 0) {
+                currentInstruction.append(String.format("%s for %d meters.", lastDirection, accumulatedDistance));
+                instructions.add(currentInstruction.toString());
             }
         }
 
-        if (accumulatedDistance > 0) {
+        // Ensure the final instruction is added if not already added
+        if (accumulatedDistance > 0 && !instructions.contains(currentInstruction.toString())) {
             currentInstruction.append(String.format("%s for %d meters.", lastDirection, accumulatedDistance));
             instructions.add(currentInstruction.toString());
         }
@@ -89,30 +114,41 @@ public class TranslationService {
 
 
     private List<Edge> getAllEdgesByIds(List<Long> ids) {
-        String url = EDGE_CONTROLLER_URL + ids.stream()
-                .map(String::valueOf)
-                .collect(Collectors.joining(","));
-        ResponseEntity<List<Edge>> response = restTemplate.getForEntity(url, (Class<List<Edge>>) (Object) List.class);
+        String url = String.format("%s/api/edge/listed?ids=%s",
+                navigationServiceUrl, ids.stream()
+                        .map(String::valueOf)
+                        .collect(Collectors.joining(",")));
+        ResponseEntity<List<Edge>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Edge>>() {}
+        );
         return response.getBody();
     }
 
     private Edge findEdgeBetweenVertices(Vertex current, Vertex next, List<Edge> edges) {
         Map<Long, Integer> angles = current.getAngles();
-        Long edgeId = next.getId();
 
-        if (angles.containsKey(edgeId)) {
-            return edges.stream()
-                    .filter(edge -> edge.getId().equals(edgeId))
+        // Iterate over the edges to find one that connects current and next vertices
+        for (Map.Entry<Long, Integer> entry : angles.entrySet()) {
+            Long edgeId = entry.getKey();
+            Edge edge = edges.stream()
+                    .filter(e -> e.getId().equals(edgeId))
                     .findFirst()
                     .orElse(null);
-        }
 
+            if (edge != null && (edge.getVertexFrom().getId().equals(current.getId()) && edge.getVertexTo().getId().equals(next.getId()) ||
+                    edge.getVertexFrom().getId().equals(next.getId()) && edge.getVertexTo().getId().equals(current.getId()))) {
+                return edge;
+            }
+        }
         return null;
     }
 
     private String getDirection(Vertex current, Vertex next, Edge edge, int currentDirection) {
         Map<Long, Integer> angles = current.getAngles();
-        Integer angle = angles.get(next.getId());
+        Integer angle = angles.get(edge.getId());
 
         if (angle == null) {
             return "go straight";
@@ -127,22 +163,22 @@ public class TranslationService {
             }
         }
 
-        int relativeAngle = (angle - currentDirection + 360) % 360;
+        int relativeAngle = (angle - currentDirection) % 360;
 
         if (relativeAngle < 45 || relativeAngle > 315) {
             return "go straight";
-        } else if (relativeAngle < 135) {
+        } else if (relativeAngle < 135 && angle - currentDirection < 0) {
             return "turn right";
-        } else if (relativeAngle < 225) {
+        } else if (relativeAngle < 225 && relativeAngle >= 135) {
             return "turn back";
         } else {
             return "turn left";
         }
     }
 
-    private int updateDirection(Vertex current, Vertex next, int currentDirection) {
+    private int updateDirection(Vertex current, Vertex next, int currentDirection, List<Edge> edges) {
         Map<Long, Integer> angles = current.getAngles();
-        Integer angle = angles.get(next.getId());
+        Integer angle = angles.get(findEdgeBetweenVertices(current, next, edges).getId());
 
         if (angle != null) {
             int newDirection = (angle + 360) % 360; // Normalize to 0-359 degrees

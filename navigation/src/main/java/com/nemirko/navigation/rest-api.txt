@@ -1,501 +1,1465 @@
-###
+### Create Vertex Вход
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Enter",
-  "description": "Main Entrance",
+  "name": "Вход",
+  "description": "Вход в здание с улицы",
   "type": "Port",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T162850.200.json
-<> 2024-06-01T161558.200.json
-<> 2024-06-01T160311.500.json
-<> 2024-06-01T155821.500.json
-<> 2024-06-01T155149.500.json
-<> 2024-06-01T155101.500.json
-<> 2024-06-01T155010.500.json
-<> 2024-06-01T154859.500.json
-<> 2024-05-23T221556.200.json
-
-
-###
+### Create Vertex Перекресток 2
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Crossroad",
-  "description": "Crossroad near entrance, toilet and living Room",
+  "name": "Перекресток 2",
+  "description": "Перекресток перед входом/турникетами",
   "type": "Crossroad",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T162904.200.json
-
-###
+### Create Vertex Проход в правое крыло
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Toilet",
-  "description": "Toilet first floor",
-  "type": "Cabinet",
-  "availability": true,
-  "level": 1
-}
-
-<> 2024-06-01T162914.200.json
-
-###
-POST http://localhost:8080/api/vertex
-Content-Type: application/json
-
-{
-  "name": "Living Room",
-  "description": "Living Room first floor",
-  "type": "Cabinet",
-  "availability": true,
-  "level": 1
-}
-
-<> 2024-06-01T162919.200.json
-
-###
-POST http://localhost:8080/api/vertex
-Content-Type: application/json
-
-{
-  "name": "Crossroad near ladder",
-  "description": "Crossroad near ladder",
+  "name": "Проход в правое крыло",
+  "description": "Проход в правое крыло",
   "type": "Crossroad",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163101.200.json
-
-###
+### Create Vertex Перекресток 4
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Ladder",
-  "description": "Ladder to second floor",
+  "name": "Перекресток 4",
+  "description": "Перекресток перед лестницей",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex Левая Центральная Лестница на первом этаже
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Левая Центральная Лестница на первом этаже",
+  "description": "Левая Центральная Лестница на первом этаже",
   "type": "Port",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163121.200.json
-
-###
+### Create Vertex Перекресток 6
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Crossroad",
-  "description": "Crossroad to kitchen and library",
+  "name": "Перекресток 6",
+  "description": "Перекресток перед столовой",
   "type": "Crossroad",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163127.200.json
-
-###
+### Create Vertex Столовая
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Library",
-  "description": "Library first floor",
+  "name": "Столовая",
+  "description": "Столовая",
   "type": "Cabinet",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163132.200.json
-
-###
+### Create Vertex Проход в дальне правое крыло
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Kitchen",
-  "description": "Kitchen first floor",
-  "type": "Cabinet",
-  "availability": true,
-  "level": 1
+  "name": "Проход в дальне правое крыло",
+  "description": "Проход в дальне правое крыло",
+  "type": "Crossroad",
+  "availability": true
 }
 
-<> 2024-06-01T163349.200.json
-
-###
+### Create Vertex Лифт на первом этаже
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Ladder from first floor",
-  "description": "Ladder from First floor",
+  "name": "Лифт на первом этаже",
+  "description": "Лифт на первом этаэе",
   "type": "Port",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163353.200.json
-
-
-###
+### Create Vertex Перекресток 10
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Crossroad second floor",
-  "description": "Crossroad second floor near ladder",
+  "name": "Перекресток 10",
+  "description": "Перекресток Перед аппаратом",
   "type": "Crossroad",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163402.200.json
-
-###
+### Create Vertex Перекресток 11
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Ladder to third flood",
-  "description": "Ladder to third floor",
+  "name": "Перекресток 11",
+  "description": "Перекресток перед входом во внутренний двор",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex Выход во внутренний двор
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Выход во внутренний двор",
+  "description": "Выход во внутренний двор",
   "type": "Port",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163407.200.json
-
-###
+### Create Vertex Перекресток 13
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Crossroad between toilet and bath",
-  "description": "Crossroad second floor",
+  "name": "Перекресток 13",
+  "description": "Перекресток перед ключами",
   "type": "Crossroad",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163415.200.json
-
-###
+### Create Vertex Кабинет с Ключами
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Toilet",
-  "description": "Toilet second floor",
+  "name": "Кабинет с Ключами",
+  "description": "Кабинет с Ключами",
   "type": "Cabinet",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163420.200.json
-
-###
+### Create Vertex Проход в правое крыло
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Bath",
-  "description": "Bath Second floor",
-  "type": "Cabinet",
-  "availability": true,
-  "level": 1
-}
-
-<> 2024-06-01T163423.200.json
-
-###
-POST http://localhost:8080/api/vertex
-Content-Type: application/json
-
-{
-  "name": "Crossroad Enter to circle",
-  "description": "Crossroad to Circle",
+  "name": "Проход в правое крыло",
+  "description": "проход в правое крыло",
   "type": "Crossroad",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163550.200.json
-
-###
+### Create Vertex Перекресток 16
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Circle 17",
-  "description": "Circle",
-  "type": "Crossroad",
-  "availability": true,
-  "level": 1
+  "name": "Перекресток 16",
+  "description": "Перекресток перед муж. туалетом",
+  "type": null,
+  "availability": true
 }
 
-<> 2024-06-01T163554.200.json
-
-###
+### Create Vertex Муж. Туалет
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Circle Room 18",
-  "description": "Circle room",
+  "name": "Муж. Туалет",
+  "description": "Муж. Туалет на первом этаже",
   "type": "Cabinet",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163558.200.json
-
-###
+### Create Vertex Перекресток 18
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Circle 19",
-  "description": "Circle",
+  "name": "Перекресток 18",
+  "description": "Перекресток перед женским туалетом",
   "type": "Crossroad",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163601.200.json
-
-###
+### Create Vertex Женский Туалет
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Circle Room 20",
-  "description": "Circle room",
+  "name": "Женский Туалет",
+  "description": "Женский Туалет на первом этаже",
   "type": "Cabinet",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163605.200.json
-
-###
+### Create Vertex Перекресток 20
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Circle 21",
-  "description": "Circle",
+  "name": "Перекресток 20",
+  "description": "Перекресток перед лестницей",
   "type": "Crossroad",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163607.200.json
-
-###
+### Create Vertex Лестница на второй этаж
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Circle Room 22",
-  "description": "Circle room",
-  "type": "Cabinet",
-  "availability": true,
-  "level": 1
-}
-
-<> 2024-06-01T163613.200.json
-
-###
-POST http://localhost:8080/api/vertex
-Content-Type: application/json
-
-{
-  "name": "Circle 23",
-  "description": "Circle",
-  "type": "Crossroad",
-  "availability": true,
-  "level": 1
-}
-
-<> 2024-06-01T163616.200.json
-
-###
-POST http://localhost:8080/api/vertex
-Content-Type: application/json
-
-{
-  "name": "Circle Room 24",
-  "description": "Circle room",
-  "type": "Cabinet",
-  "availability": true,
-  "level": 1
-}
-
-<> 2024-06-01T163619.200.json
-
-###
-POST http://localhost:8080/api/vertex
-Content-Type: application/json
-
-{
-  "name": "Circle 25",
-  "description": "Circle",
-  "type": "Crossroad",
-  "availability": true,
-  "level": 1
-}
-
-<> 2024-06-01T163622.200.json
-
-###
-POST http://localhost:8080/api/vertex
-Content-Type: application/json
-
-{
-  "name": "Circle Room 26",
-  "description": "Circle room",
-  "type": "Cabinet",
-  "availability": true,
-  "level": 1
-}
-
-<> 2024-06-01T163624.200.json
-
-###
-POST http://localhost:8080/api/vertex
-Content-Type: application/json
-
-{
-  "name": "Circle 27",
-  "description": "Circle",
-  "type": "Crossroad",
-  "availability": true,
-  "level": 1
-}
-
-<> 2024-06-01T163627.200.json
-
-###
-POST http://localhost:8080/api/vertex
-Content-Type: application/json
-
-{
-  "name": "Circle Room 28",
-  "description": "Circle room",
-  "type": "Cabinet",
-  "availability": true,
-  "level": 1
-}
-
-<> 2024-06-01T163631.200.json
-
-###
-POST http://localhost:8080/api/vertex
-Content-Type: application/json
-
-{
-  "name": "Ladder from Second Floor",
-  "description": "Ladder from Second Floor",
+  "name": "Лестница на второй этаж",
+  "description": "Лестница на второй этаж",
   "type": "Port",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163638.200.json
-
-
-###
+### Create Vertex Центральная лестница на первом этаже
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Office 30",
-  "description": "Office Third Floor",
-  "type": "Cabinet",
-  "availability": true,
-  "level": 1
+  "name": "Центральная лестница на первом этаже",
+  "description": "Центральная лестница на первом этаже",
+  "type": "Port",
+  "availability": true
 }
 
-<> 2024-06-01T163644.200.json
-
-###
+### Create Vertex Перекресток 23
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Crossroad 31 Third Floor",
-  "description": "Crossroad 31 Third Floor",
+  "name": "Перекресток 23",
+  "description": "Перекресток перед гардеробом",
   "type": "Crossroad",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163648.200.json
-
-###
+### Create Vertex Гардероб
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Storage 32",
-  "description": "Storage Third Floor",
+  "name": "Гардероб",
+  "description": "Гардероб",
   "type": "Cabinet",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163651.200.json
-
-###
+### Create Vertex Перекресток 25
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Storage 33",
-  "description": "Storage Third Floor",
-  "type": "Cabinet",
-  "availability": true,
-  "level": 1
-}
-
-<> 2024-06-01T163654.200.json
-
-###
-POST http://localhost:8080/api/vertex
-Content-Type: application/json
-
-{
-  "name": "Crossroad 34 Third Floor",
-  "description": "Crossroad 34 Third Floor",
+  "name": "Перекресток 25",
+  "description": "Перекресток перед кабинетом 127",
   "type": "Crossroad",
-  "availability": true,
-  "level": 1
+  "availability": true
 }
 
-<> 2024-06-01T163656.200.json
-
-###
+### Create Vertex Лестница
 POST http://localhost:8080/api/vertex
 Content-Type: application/json
 
 {
-  "name": "Storage 35",
-  "description": "Toilet Third Floor",
-  "type": "Cabinet",
-  "availability": true,
-  "level": 1
+  "name": "Лестница",
+  "description": "Лестница на второй этаж с первого в правом крыле",
+  "type": "Port",
+  "availability": true
 }
 
-<> 2024-06-01T163659.200.json
+### Create Vertex 127
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
 
+{
+  "name": "127",
+  "description": "Кабинет 127 - Кафедра ИКТ",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 28
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 28",
+  "description": "Перекресток 101/126",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 101
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "101",
+  "description": "Кабинет 101",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex 126
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "126",
+  "description": "Кабинет 126 хаб",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 31
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 31",
+  "description": "Перекресток 104/125",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 104
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "104",
+  "description": "Кабинет 104",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex 125
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "125",
+  "description": "Кабинет 125",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 34
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 34",
+  "description": "Перекресток перед 105 кабинетом",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 105
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "105",
+  "description": "Кабинет 105",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 36
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 36",
+  "description": "Перекресток 106/124",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 106
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "106",
+  "description": "Кабинет 106",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex 124
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "124",
+  "description": "Кабинет 124",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 39
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 39",
+  "description": "Перекресток 107/123",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 107
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "107",
+  "description": "Кабинет 107",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex 123
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "123",
+  "description": "Кабинет 123",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 42
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 42",
+  "description": "Перекресток перед 108",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 108
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "108",
+  "description": "Кабинет 108",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 44
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 44",
+  "description": "Перекресток перед 109",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 109
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "109",
+  "description": "Кабинет 109",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 46
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 46",
+  "description": "Перекресток 110/122",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 110
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "110",
+  "description": "Кабинет 110",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex 122
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "122",
+  "description": "Кабинет 122",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 49
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 49",
+  "description": "Перекресток между лестницей и 121",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex Лестница на второй этаж
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Лестница на второй этаж",
+  "description": "Лестница на второй этаж с первого напротив 121 кабинета",
+  "type": "Port",
+  "availability": true
+}
+
+### Create Vertex 121
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "121",
+  "description": "Кабинет 121",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 52
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 52",
+  "description": "Перкресток 111/120",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 111
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "111",
+  "description": "Кабинет 111",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex 120
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "120",
+  "description": "Кабинет 120",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 55
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 55",
+  "description": "Перекресток 112/119",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 112
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "112",
+  "description": "Кабинет 112",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex 119
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "119",
+  "description": "Кабинет 119",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 58
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 58",
+  "description": "Перекресток перед 112Б",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 112Б
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "112Б",
+  "description": "Кабинет 112Б",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 59
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 59",
+  "description": "Перекресток 113Б/118",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 113Б
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "113Б",
+  "description": "Кабинет 113Б",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex 118
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "118",
+  "description": "Кабинет 118",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 62
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 62",
+  "description": "Перекресток перед 117",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 117
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "117",
+  "description": "Кабинет 117",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 64
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 64",
+  "description": "Перекресток перед 113А",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 113А
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "113А",
+  "description": "Кабинет 113А",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 66
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 66",
+  "description": "Перекресток перед 114",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 114
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "114",
+  "description": "Кабинет 114",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 68
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 68",
+  "description": "Перекресток перед 115",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 115
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "115",
+  "description": "Кабинет 115",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 70
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 70",
+  "description": "Поворот в закуток к 116",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex Перекресток 71
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 71",
+  "description": "Перекресток перед 116",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 116
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "116",
+  "description": "Кабинет 116",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 73
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 73",
+  "description": "Перекресток перед женским туалетом",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex Женский туалет
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Женский туалет",
+  "description": "Женский туалет, первый этаж, правое крыло",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Перекресток 75
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 75",
+  "description": "Перекресток между лестницей на второй этаж и кабинетом 145",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 145
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "145",
+  "description": "Кабинет 145",
+  "type": "Cabinet",
+  "availability": true
+}
+
+### Create Vertex Лестница на второй этаж
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Лестница на второй этаж",
+  "description": "Лестница на второй этаж с первого этажа",
+  "type": "Port",
+  "availability": true
+}
+
+### Create Vertex Перекресток 78
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "Перекресток 78",
+  "description": "Перекресток перед 148",
+  "type": "Crossroad",
+  "availability": true
+}
+
+### Create Vertex 148
+POST http://localhost:8080/api/vertex
+Content-Type: application/json
+
+{
+  "name": "148",
+  "description": "Кабинет 148",
+  "type": "Cabinet",
+  "availability": true
+}
+
+
+
+### Create Edge 1
+POST http://localhost:8080/api/edge?distance=2&vertexFromId=1&vertexToId=2&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 2
+POST http://localhost:8080/api/edge?distance=4&vertexFromId=2&vertexToId=3&direction=180&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 3
+POST http://localhost:8080/api/edge?distance=8&vertexFromId=2&vertexToId=4&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 4
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=4&vertexToId=5&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 5
+POST http://localhost:8080/api/edge?distance=3&vertexFromId=4&vertexToId=6&direction=135&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 6
+POST http://localhost:8080/api/edge?distance=7&vertexFromId=6&vertexToId=7&direction=100&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 7
+POST http://localhost:8080/api/edge?distance=10&vertexFromId=6&vertexToId=8&direction=135&type=Horizontal
+Content-Type: application/json
+
+### Create Edge 8
+POST http://localhost:8080/api/edge?distance=3&vertexFromId=6&vertexToId=9&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 9
+POST http://localhost:8080/api/edge?distance=4&vertexFromId=4&vertexToId=10&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 10
+POST http://localhost:8080/api/edge?distance=2&vertexFromId=10&vertexToId=11&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 11
+POST http://localhost:8080/api/edge?distance=2&vertexFromId=11&vertexToId=12&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 12
+POST http://localhost:8080/api/edge?distance=16&vertexFromId=11&vertexToId=13&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 13
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=13&vertexToId=14&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 14
+POST http://localhost:8080/api/edge?distance=12&vertexFromId=13&vertexToId=15&direction=330&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 15
+POST http://localhost:8080/api/edge?distance=8&vertexFromId=15&vertexToId=16&direction=210&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 16
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=16&vertexToId=17&direction=300&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 17
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=16&vertexToId=18&direction=210&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 18
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=18&vertexToId=19&direction=300&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 19
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=18&vertexToId=20&direction=210&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 20
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=20&vertexToId=21&direction=300&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 21
+POST http://localhost:8080/api/edge?distance=10&vertexFromId=20&vertexToId=23&direction=180&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 22
+POST http://localhost:8080/api/edge?distance=8&vertexFromId=23&vertexToId=2&direction=180&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 23
+POST http://localhost:8080/api/edge?distance=6&vertexFromId=23&vertexToId=22&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 24
+POST http://localhost:8080/api/edge?distance=3&vertexFromId=23&vertexToId=24&direction=315&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 25
+POST http://localhost:8080/api/edge?distance=3&vertexFromId=15&vertexToId=25&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 26
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=25&vertexToId=26&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 27
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=25&vertexToId=27&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 28
+POST http://localhost:8080/api/edge?distance=2&vertexFromId=25&vertexToId=28&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 29
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=28&vertexToId=29&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 30
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=28&vertexToId=30&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 31
+POST http://localhost:8080/api/edge?distance=3&vertexFromId=28&vertexToId=31&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+### Create Edge 32
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=31&vertexToId=32&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173832-1.200.json
+
+### Create Edge 33
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=31&vertexToId=33&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173833.200.json
+
+### Create Edge 34
+POST http://localhost:8080/api/edge?distance=4&vertexFromId=31&vertexToId=34&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173834.200.json
+
+### Create Edge 35
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=34&vertexToId=35&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173834-1.200.json
+
+### Create Edge 36
+POST http://localhost:8080/api/edge?distance=5&vertexFromId=34&vertexToId=36&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173835.200.json
+
+### Create Edge 37
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=36&vertexToId=37&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173835-1.200.json
+
+### Create Edge 38
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=36&vertexToId=38&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173836.200.json
+
+### Create Edge 39
+POST http://localhost:8080/api/edge?distance=4&vertexFromId=36&vertexToId=39&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173836-1.200.json
+
+### Create Edge 40
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=39&vertexToId=40&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173837.200.json
+
+### Create Edge 41
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=39&vertexToId=41&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173837-1.200.json
+
+### Create Edge 42
+POST http://localhost:8080/api/edge?distance=5&vertexFromId=39&vertexToId=42&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173838.200.json
+
+### Create Edge 43
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=42&vertexToId=43&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173839.200.json
+
+### Create Edge 44
+POST http://localhost:8080/api/edge?distance=4&vertexFromId=42&vertexToId=44&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173839-1.200.json
+
+### Create Edge 45
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=44&vertexToId=45&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173840.200.json
+
+### Create Edge 46
+POST http://localhost:8080/api/edge?distance=4&vertexFromId=44&vertexToId=46&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173840-1.200.json
+
+### Create Edge 47
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=46&vertexToId=47&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173841.200.json
+
+### Create Edge 48
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=46&vertexToId=48&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173841-1.200.json
+
+### Create Edge 49
+POST http://localhost:8080/api/edge?distance=3&vertexFromId=46&vertexToId=49&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173842.200.json
+
+### Create Edge 50
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=49&vertexToId=50&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173842-1.200.json
+
+### Create Edge 51
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=49&vertexToId=51&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173843.200.json
+
+### Create Edge 52
+POST http://localhost:8080/api/edge?distance=4&vertexFromId=49&vertexToId=52&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173843-1.200.json
+
+### Create Edge 53
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=52&vertexToId=53&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173844.200.json
+
+### Create Edge 54
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=52&vertexToId=54&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173844-1.200.json
+
+### Create Edge 55
+POST http://localhost:8080/api/edge?distance=4&vertexFromId=52&vertexToId=55&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173845.200.json
+
+### Create Edge 56
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=55&vertexToId=56&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173845-1.200.json
+
+### Create Edge 57
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=55&vertexToId=57&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173846.200.json
+
+### Create Edge 58
+POST http://localhost:8080/api/edge?distance=6&vertexFromId=55&vertexToId=58&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173847.200.json
+
+### Create Edge 59
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=58&vertexToId=59&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173847-1.200.json
+
+### Create Edge 60
+POST http://localhost:8080/api/edge?distance=4&vertexFromId=58&vertexToId=60&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173848.200.json
+
+### Create Edge 61
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=60&vertexToId=61&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173848-1.200.json
+
+### Create Edge 62
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=60&vertexToId=62&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173849.200.json
+
+### Create Edge 63
+POST http://localhost:8080/api/edge?distance=3&vertexFromId=60&vertexToId=63&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173849-1.200.json
+
+### Create Edge 64
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=63&vertexToId=64&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173850.200.json
+
+### Create Edge 65
+POST http://localhost:8080/api/edge?distance=4&vertexFromId=63&vertexToId=65&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173851.200.json
+
+### Create Edge 66
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=65&vertexToId=66&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173851-1.200.json
+
+### Create Edge 67
+POST http://localhost:8080/api/edge?distance=4&vertexFromId=65&vertexToId=67&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173852.200.json
+
+### Create Edge 68
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=67&vertexToId=68&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173852-1.200.json
+
+### Create Edge 69
+POST http://localhost:8080/api/edge?distance=2&vertexFromId=67&vertexToId=69&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173853.200.json
+
+### Create Edge 70
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=69&vertexToId=70&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173853-1.200.json
+
+### Create Edge 71
+POST http://localhost:8080/api/edge?distance=3&vertexFromId=69&vertexToId=71&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173854.200.json
+
+### Create Edge 72
+POST http://localhost:8080/api/edge?distance=3&vertexFromId=71&vertexToId=72&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173855.200.json
+
+### Create Edge 73
+POST http://localhost:8080/api/edge?distance=1&vertexFromId=72&vertexToId=73&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173855-1.200.json
+
+### Create Edge 74
+POST http://localhost:8080/api/edge?distance=4&vertexFromId=71&vertexToId=74&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173856.200.json
+
+### Create Edge 75
+POST http://localhost:8080/api/edge?distance=3&vertexFromId=74&vertexToId=75&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173857.200.json
+
+### Create Edge 76
+POST http://localhost:8080/api/edge?distance=5&vertexFromId=74&vertexToId=76&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173857-1.200.json
+
+### Create Edge 77
+POST http://localhost:8080/api/edge?distance=2&vertexFromId=76&vertexToId=77&direction=90&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173858.200.json
+
+### Create Edge 78
+POST http://localhost:8080/api/edge?distance=2&vertexFromId=76&vertexToId=78&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173858-1.200.json
+
+### Create Edge 79
+POST http://localhost:8080/api/edge?distance=3&vertexFromId=76&vertexToId=79&direction=0&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173859.200.json
+
+### Create Edge 80
+POST http://localhost:8080/api/edge?distance=2&vertexFromId=79&vertexToId=80&direction=270&type=Horizontal
+Content-Type: application/json
+
+{}
+
+<> 2024-06-19T173859-1.200.json
+
+### Create Scheme Manually
+POST http://localhost:8080/api/scheme/manual
+Content-Type: application/x-www-form-urlencoded
+
+vertexIds=1&vertexIds=2&vertexIds=3&vertexIds=4&vertexIds=5&vertexIds=6&vertexIds=7&vertexIds=8&vertexIds=9&vertexIds=10&vertexIds=11&vertexIds=12&vertexIds=13&vertexIds=14&vertexIds=15&vertexIds=16&vertexIds=17&vertexIds=18&vertexIds=19&vertexIds=20&vertexIds=21&vertexIds=22&vertexIds=23&vertexIds=24&vertexIds=25&vertexIds=26&vertexIds=27&vertexIds=28&vertexIds=29&vertexIds=30&vertexIds=31&vertexIds=32&vertexIds=33&vertexIds=34&vertexIds=35&vertexIds=36&vertexIds=37&vertexIds=38&vertexIds=39&vertexIds=40&vertexIds=41&vertexIds=42&vertexIds=43&vertexIds=44&vertexIds=45&vertexIds=46&vertexIds=47&vertexIds=48&vertexIds=49&vertexIds=50&vertexIds=51&vertexIds=52&vertexIds=53&vertexIds=54&vertexIds=55&vertexIds=56&vertexIds=57&vertexIds=58&vertexIds=59&vertexIds=60&vertexIds=61&vertexIds=62&vertexIds=63&vertexIds=64&vertexIds=65&vertexIds=66&vertexIds=67&vertexIds=68&vertexIds=69&vertexIds=70&vertexIds=71&vertexIds=72&vertexIds=73&vertexIds=74&vertexIds=75&vertexIds=76&vertexIds=77&vertexIds=78&vertexIds=79&vertexIds=80&edgeIds=1&edgeIds=2&edgeIds=3&edgeIds=4&edgeIds=5&edgeIds=6&edgeIds=7&edgeIds=8&edgeIds=9&edgeIds=10&edgeIds=11&edgeIds=12&edgeIds=13&edgeIds=14&edgeIds=15&edgeIds=16&edgeIds=17&edgeIds=18&edgeIds=19&edgeIds=20&edgeIds=21&edgeIds=22&edgeIds=23&edgeIds=24&edgeIds=25&edgeIds=26&edgeIds=27&edgeIds=28&edgeIds=29&edgeIds=30&edgeIds=31&edgeIds=32&edgeIds=33&edgeIds=34&edgeIds=35&edgeIds=36&edgeIds=37&edgeIds=38&edgeIds=39&edgeIds=40&edgeIds=41&edgeIds=42&edgeIds=43&edgeIds=44&edgeIds=45&edgeIds=46&edgeIds=47&edgeIds=48&edgeIds=49&edgeIds=50&edgeIds=51&edgeIds=52&edgeIds=53&edgeIds=54&edgeIds=55&edgeIds=56&edgeIds=57&edgeIds=58&edgeIds=59&edgeIds=60&edgeIds=61&edgeIds=62&edgeIds=63&edgeIds=64&edgeIds=65&edgeIds=66&edgeIds=67&edgeIds=68&edgeIds=69&edgeIds=70&edgeIds=71&edgeIds=72&edgeIds=73&edgeIds=74&edgeIds=75&edgeIds=76&edgeIds=77&edgeIds=78&edgeIds=79&edgeIds=80&level=1&description=%D0%9F%D0%B5%D1%80%D0%B2%D1%8B%D0%B9+%D1%8D%D1%82%D0%B0%D0%B6%2C+%D0%98%D0%9A%D0%A2%2C+%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80
+
+<> 2024-06-19T174032.200.json

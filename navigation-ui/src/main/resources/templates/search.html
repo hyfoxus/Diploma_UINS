@@ -40,7 +40,7 @@
 <div class="container">
     <div id="results"></div>
 </div>
-</body>
+
 <script>
     let selectedFromVertexId = null;
     let selectedToVertexId = null;
@@ -76,6 +76,7 @@
             })
             .catch(error => {
                 console.error('Error searching vertices:', error);
+                alert('An error occurred while searching for vertices. Please try again.');
             });
     }
 
@@ -106,22 +107,40 @@
             return;
         }
 
+        console.log(`Fetching path from vertex ${selectedFromVertexId} to vertex ${selectedToVertexId} with ${numPaths} routes`);
+
         fetch(`/api/navigation/build-path?vertexFromId=${selectedFromVertexId}&vertexToId=${selectedToVertexId}&amountRoutes=${numPaths}`)
-            .then(response => response.json())
+            .then(response => {
+                console.log('Received response:', response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
+                console.log('Received data:', data);
                 const resultsDiv = document.getElementById('results');
-                resultsDiv.innerHTML = '<h3>Built Paths</h3>';
-                data.forEach((path, index) => {
-                    resultsDiv.innerHTML += `<h4>Path ${index + 1}</h4>`;
-                    path.forEach(vertex => {
-                        resultsDiv.innerHTML += `<p>${vertex.name} - ${vertex.description}</p>`;
-                    });
+                resultsDiv.innerHTML = '<h3>Built Path</h3>';
+                data.forEach((description, index) => {
+                    resultsDiv.innerHTML += `<p>${index + 1}. ${description}</p>`;
                 });
             })
             .catch(error => {
                 console.error('Error building path:', error);
+                alert('An error occurred while building the path. Please try again.');
             });
     }
+
+    function getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        const from = params.get('from');
+        if (from) {
+            document.getElementById('fromInput').value = from;
+            selectedFromVertexId=from;
+        }
+    }
+
+    window.onload = getQueryParams;
 
     document.addEventListener('click', function(event) {
         const fromDropdown = document.getElementById('fromDropdown');
@@ -133,21 +152,6 @@
             toDropdown.style.display = 'none';
         }
     });
-
-    function getQueryParams() {
-        const params = new URLSearchParams(window.location.search);
-        const from = params.get('from');
-        const to = params.get('to');
-        if (from) {
-            document.getElementById('fromInput').value = from;
-            searchVertices('from');
-        }
-        if (to) {
-            document.getElementById('toInput').value = to;
-            searchVertices('to');
-        }
-    }
-
-    window.onload = getQueryParams;
 </script>
+</body>
 </html>
